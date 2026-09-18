@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-09-18T08:53:03.1063129Z",
+  "generatedAt": "2026-09-18T10:44:57.3118475Z",
   "title": "Design System: TutorDesk Evidence Conservation Lab",
   "extensions": {
     "colorMeta": {
@@ -145,6 +145,11 @@
         "name": "scrim-fade",
         "value": "180ms ease-out",
         "purpose": "Clarifies modal review state without competing with the drawer."
+      },
+      {
+        "name": "provenance-popover",
+        "value": "180ms ease-out; 0ms when prefers-reduced-motion is active",
+        "purpose": "Reveals the in-situ provenance popover at its originating badge without spatial travel."
       }
     ],
     "breakpoints": [
@@ -187,9 +192,9 @@
       "name": "Citation Trigger",
       "kind": "chip",
       "refersTo": "citation-trigger",
-      "description": "Opens an exact citation or learner-state provenance path inline.",
-      "html": "<button class=\"ds-citation\" type=\"button\" aria-pressed=\"false\">S1 · p.42 ¶3</button>",
-      "css": ".ds-citation { min-height: 30px; padding: 1px 6px 2px; border: 1px solid var(--verdigris-deep, #29564e); border-radius: 999px; background: var(--paper-strong, #fbfcfa); color: var(--verdigris-deep, #29564e); font-family: var(--label, 'Barlow Lab', 'Arial Narrow', sans-serif); font-size: .74rem; font-weight: 600; letter-spacing: .04em; cursor: pointer; } .ds-citation:hover, .ds-citation[aria-pressed='true'], .ds-citation:active { background: var(--verdigris-deep, #29564e); color: #fff; } .ds-citation:focus-visible { outline: 3px solid var(--focus, #0b67a0); outline-offset: 2px; }"
+      "description": "Anchors exact citation or learner-state provenance directly to the supported source text.",
+      "html": "<button class=\"ds-citation\" type=\"button\" aria-expanded=\"false\" aria-controls=\"ds-provenance-s1\">S1 · p.42 ¶3</button>",
+      "css": ".ds-citation { min-height: 30px; padding: 1px 6px 2px; border: 1px solid var(--verdigris-deep, #29564e); border-radius: 999px; background: var(--paper-strong, #fbfcfa); color: var(--verdigris-deep, #29564e); font-family: var(--label, 'Barlow Lab', 'Arial Narrow', sans-serif); font-size: .74rem; font-weight: 600; letter-spacing: .04em; cursor: pointer; } .ds-citation:hover, .ds-citation[aria-expanded='true'], .ds-citation:active { background: var(--verdigris-deep, #29564e); color: #fff; } .ds-citation:focus-visible { outline: 3px solid var(--focus, #0b67a0); outline-offset: 2px; }"
     },
     {
       "name": "Pending Status Stamp",
@@ -205,6 +210,22 @@
       "description": "Identifies a source revision in the vault while preserving active-source context.",
       "html": "<button class=\"ds-source-record\" type=\"button\" aria-current=\"true\"><strong>Thermodynamic Foundations</strong><span>PDF · rev. 04 · 218 pages</span></button>",
       "css": ".ds-source-record { width: 100%; padding: 9px 4px; border: 0; border-top: 1px solid var(--line-soft, #cbcfc8); border-radius: 0; background: transparent; color: var(--ink, #24302b); text-align: left; cursor: pointer; } .ds-source-record strong, .ds-source-record span { display: block; } .ds-source-record span { margin-top: 3px; color: var(--ink-muted, #58645e); font-size: .74rem; } .ds-source-record:hover, .ds-source-record[aria-current='true'] { background: var(--verdigris-wash, #d9e6e1); } .ds-source-record:active { box-shadow: inset 5px 0 0 var(--verdigris, #477c72); } .ds-source-record:focus-visible { outline: 3px solid var(--focus, #0b67a0); outline-offset: 2px; }"
+    },
+    {
+      "name": "Session Record",
+      "kind": "card",
+      "refersTo": "session-record",
+      "description": "Keeps active Source Claims and practice attempts visible as compact examination context.",
+      "html": "<section class=\"ds-session-record\"><span class=\"ds-session-label\">Session record</span><strong>S1 · S2</strong><span>Practice attempts · 03</span></section>",
+      "css": ".ds-session-record { display: grid; grid-template-columns: auto auto 1fr; align-items: center; gap: 12px; padding: 7px 14px; border: 1px solid var(--line, #9da59e); border-radius: 0; background: var(--paper-strong, #fbfcfa); color: var(--ink, #24302b); } .ds-session-label, .ds-session-record strong, .ds-session-record span { font-family: var(--label, 'Barlow Lab', 'Arial Narrow', sans-serif); font-size: .73rem; font-variant-numeric: tabular-nums; letter-spacing: .08em; text-transform: uppercase; } .ds-session-label { color: var(--ink-muted, #58645e); } .ds-session-record strong { color: var(--verdigris-deep, #29564e); }"
+    },
+    {
+      "name": "Immediate Provenance Popover",
+      "kind": "custom",
+      "refersTo": "provenance-popover",
+      "description": "Opens over its citation badge with claim text, immutable revision state, locator, and the complete node/hash chain.",
+      "html": "<span class=\"ds-provenance-anchor\"><button class=\"ds-provenance-badge\" type=\"button\" aria-expanded=\"true\" aria-controls=\"ds-provenance-s1\">S1 · p.42 ¶3</button><section class=\"ds-provenance-popover\" id=\"ds-provenance-s1\" role=\"dialog\" aria-label=\"Provenance for Source Claim S1\" data-open=\"true\"><span class=\"ds-provenance-label\">Supported claim</span><p>Entropy increases for the isolated system described by this passage.</p><div class=\"ds-provenance-chain\"><span>Source Claim S1</span><i></i><span>rev. 04 · p.42 ¶3</span><i></i><span>sha256: 61b7…9e2a</span></div></section></span>",
+      "css": ".ds-provenance-anchor { position: relative; display: inline-flex; } .ds-provenance-badge { min-height: 30px; padding: 1px 6px 2px; border: 1px solid var(--verdigris-deep, #29564e); border-radius: 999px; background: var(--verdigris-deep, #29564e); color: #fff; font-family: var(--label, 'Barlow Lab', 'Arial Narrow', sans-serif); font-size: .74rem; font-weight: 600; letter-spacing: .04em; cursor: pointer; } .ds-provenance-badge:hover { background: var(--verdigris, #477c72); } .ds-provenance-badge:active { background: var(--ink, #24302b); } .ds-provenance-badge:focus-visible { outline: 3px solid var(--focus, #0b67a0); outline-offset: 2px; } .ds-provenance-popover { position: absolute; z-index: 2; top: calc(100% + 8px); left: 0; width: min(390px, 82vw); padding: 12px; border: 1px solid var(--verdigris-deep, #29564e); border-radius: 0; background: var(--paper-strong, #fbfcfa); color: var(--ink, #24302b); box-shadow: var(--shadow, 0 18px 42px rgba(36, 48, 43, .15)); opacity: 0; transform: translateY(-4px); pointer-events: none; transition: opacity 180ms ease-out, transform 180ms ease-out; } .ds-provenance-anchor:hover .ds-provenance-popover, .ds-provenance-anchor:focus-within .ds-provenance-popover, .ds-provenance-popover[data-open='true'] { opacity: 1; transform: translateY(0); pointer-events: auto; } .ds-provenance-label { color: var(--ink-muted, #58645e); font-family: var(--label, 'Barlow Lab', 'Arial Narrow', sans-serif); font-size: .72rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; } .ds-provenance-popover p { margin: 8px 0 12px; font-size: .88rem; line-height: 1.45; } .ds-provenance-chain { display: flex; flex-wrap: wrap; align-items: center; gap: 5px; } .ds-provenance-chain span { padding: 5px 7px; border: 1px solid var(--verdigris-deep, #29564e); background: var(--verdigris-wash, #d9e6e1); font-size: .75rem; } .ds-provenance-chain i { width: 16px; border-top: 1px solid var(--verdigris-deep, #29564e); } @media (prefers-reduced-motion: reduce) { .ds-provenance-popover { transition: none; transform: none; } }"
     },
     {
       "name": "Evidence Card",
@@ -225,12 +246,12 @@
   ],
   "narrative": {
     "northStar": "Evidence Conservation Lab",
-    "overview": "TutorDesk treats knowledge as material under examination. Mineral paper, graphite notation, oxidized-green evidence marks, accession-orange review layers, hairline rules, and tabular identifiers make the interface feel like a working conservation bench: exacting, quiet, and visibly accountable.\n\nThe active source is the artifact, not background for a chat stream. Explanations, questions, provenance, and learner-state proposals appear as reversible examination layers beside the evidence that produced them. The system is dense without feeling compressed, and every consequential state change remains visibly subject to human approval.",
+    "overview": "TutorDesk treats knowledge as material under examination. Mineral paper, graphite notation, oxidized-green evidence marks, accession-orange review layers, hairline rules, and tabular identifiers make the interface feel like a working conservation bench: exacting, quiet, and visibly accountable.\n\nThe active source is the artifact, not background for a chat stream. The Workspace expresses this through Reversible Layers: explanations, questions, provenance, and learner-state proposals sit over or beside the source as inspectable examination film. The system is dense without feeling compressed, and every consequential state change remains visibly subject to human approval.",
     "keyCharacteristics": [
       "Source-as-artifact rather than chat-as-center.",
       "Archival labels, accession marks, and hairline measurement rules.",
       "Mineral-white planes with graphite text and sparing chromatic state.",
-      "Exact provenance exposed beside claims and learner-state inferences.",
+      "Exact provenance opened in situ from the citation or learner-state badge.",
       "Square controls and layered review materials with explicit approval states."
     ],
     "rules": [
@@ -263,19 +284,25 @@
         "name": "The Capsule Exception Rule",
         "body": "Only inline citation triggers use the capsule radius; actions, stamps, panels, and navigation remain square.",
         "section": "shapes"
+      },
+      {
+        "name": "The Immediate Provenance Rule",
+        "body": "The complete evidence chain opens where the citation is read; it never requires a spatial jump away from the source.",
+        "section": "components"
       }
     ],
     "dos": [
-      "Do make the source the primary visual artifact and attach claims to exact visible provenance.",
+      "Do make the source the primary visual artifact and open exact provenance in situ from its attached badge.",
       "Do use accession labels, revision identifiers, and tabular numerals to make evidence feel inspectable.",
+      "Do keep the compact Session record limited to active Source Claims and practice attempts.",
       "Do keep contextual approval controls beside the proposal and repeat every unresolved item in the consolidated queue.",
-      "Do preserve readable body copy, clear keyboard focus, reduced-motion behavior, and 44px narrow-screen touch targets.",
+      "Do support hover, click, keyboard focus, touch toggle, Escape/outside-click dismissal, focus return, reduced-motion disclosure, and 44px narrow-screen touch targets.",
       "Do use material layers, hairlines, and tonal washes before reaching for shadow."
     ],
     "donts": [
       "Don't organize the workstation around a dominant chat rail.",
       "Don't use gradients, glassy floating cards, soft rounded dashboards, or decorative color as substitutes for hierarchy.",
-      "Don't hide provenance behind a secondary journey or summarize away the exact citation path.",
+      "Don't send provenance to a bottom strip, distant side panel, or secondary journey, and don't summarize away the exact citation path.",
       "Don't use green and orange interchangeably; their evidentiary meanings are fixed.",
       "Don't imply that a learner-state mutation has happened before explicit human approval."
     ]

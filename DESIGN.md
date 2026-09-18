@@ -97,6 +97,17 @@ components:
     textColor: "{colors.graphite}"
     rounded: "{rounded.square}"
     padding: "12px"
+  session-record:
+    backgroundColor: "{colors.specimen-white}"
+    textColor: "{colors.graphite}"
+    typography: "{typography.label}"
+    rounded: "{rounded.square}"
+    padding: "7px 14px"
+  provenance-popover:
+    backgroundColor: "{colors.specimen-white}"
+    textColor: "{colors.graphite}"
+    rounded: "{rounded.square}"
+    padding: "12px"
 ---
 
 # Design System: TutorDesk Evidence Conservation Lab
@@ -107,14 +118,14 @@ components:
 
 TutorDesk treats knowledge as material under examination. Mineral paper, graphite notation, oxidized-green evidence marks, accession-orange review layers, hairline rules, and tabular identifiers make the interface feel like a working conservation bench: exacting, quiet, and visibly accountable.
 
-The active source is the artifact, not background for a chat stream. Explanations, questions, provenance, and learner-state proposals appear as reversible examination layers beside the evidence that produced them. The system is dense without feeling compressed, and every consequential state change remains visibly subject to human approval.
+The active source is the artifact, not background for a chat stream. The Workspace expresses this through Reversible Layers: explanations, questions, provenance, and learner-state proposals sit over or beside the source as inspectable examination film. The system is dense without feeling compressed, and every consequential state change remains visibly subject to human approval.
 
 **Key Characteristics:**
 
 - Source-as-artifact rather than chat-as-center.
 - Archival labels, accession marks, and hairline measurement rules.
 - Mineral-white planes with graphite text and sparing chromatic state.
-- Exact provenance exposed beside claims and learner-state inferences.
+- Exact provenance opened in situ from the citation or learner-state badge.
 - Square controls and layered review materials with explicit approval states.
 
 ## Colors
@@ -173,7 +184,7 @@ The palette behaves like a mineral light table: warm-cool whites carry the worki
 
 ## Layout
 
-The system is desktop-first and information-dense. It gives the active source the largest uninterrupted region, keeps workspace, source-vault, and capability context visible, and attaches provenance and approvals to the evidence they describe. A persistent consolidated review entry point prevents contextual proposals from becoming hidden obligations.
+The system is desktop-first and information-dense. It gives the active source the largest uninterrupted region, keeps workspace, source-vault, and capability context visible, and attaches provenance and approvals to the evidence they describe. The Workspace reference composition is Reversible Layers: a source sheet on the examination stage, transparent capability and proposal layers, and a compact Session record showing the active Source Claims and practice attempts. A persistent consolidated review entry point prevents contextual proposals from becoming hidden obligations.
 
 Spatial rhythm is built from hairline-divided regions and the frontmatter spacing scale rather than floating card gutters. Full-workstation arrangements adapt at the observed intermediate breakpoint of 1050px; at 760px, context condenses, parallel planes become a readable sequence, and controls meet a 44px touch target. This responsive change preserves source priority and review access rather than reproducing desktop columns at a smaller size.
 
@@ -228,9 +239,21 @@ Components should feel like precise lab instruments: terse, bordered, stateful, 
 
 Workspace identity, source-vault context, capabilities, and review state use divided instrument bars. Default controls stay transparent or specimen white; active controls invert to deep oxidized green. On narrow screens, global context condenses into a two-part bar and capabilities become a sticky horizontal dock.
 
-### Evidence Peel and Provenance Path
+### Session Record
 
-Selecting a claim reveals its complete evidence path as an examination layer. The reveal uses a short left-origin peel, while nodes remain square and connected by one-pixel oxidized-green rules. Learner insights must show the full Learner Insight → Contextual Fact → Raw Event chain; source claims must terminate at an immutable source revision.
+The compact Session record names the Source Claims currently in play and the learner's practice attempts without becoming a second activity feed. It uses the accession label voice, tabular identifiers, and hairline partitions so active context can be scanned from the examination stage.
+
+### Immediate Provenance Popover
+
+Inline citation badges remain attached to the source text. Hover, click, or keyboard focus opens an in-situ popover over the badge; it contains the supported claim text, immutable revision state, locator, and node/hash chain. A Source Claim traces to immutable revision and locator, then content hash. A Learner Insight traces from L3 through Contextual Fact L2 to Raw Event L1.
+
+Touch tap toggles the popover. Escape and outside click dismiss it, dismissal returns focus to the originating badge, and reduced-motion mode reveals it immediately. Provenance never redirects attention to a bottom strip or distant side panel.
+
+**The Immediate Provenance Rule.** The complete evidence chain opens where the citation is read; it never requires a spatial jump away from the source.
+
+### Evidence Nodes
+
+Provenance nodes remain square and connect with one-pixel oxidized-green rules. Each node exposes its layer or artifact type, stable identifier, and revision or hash evidence without collapsing the chain into a summary.
 
 ### Review Layer
 
@@ -240,16 +263,17 @@ Memory Proposals and Boardroom Recommendations use accession-orange review mater
 
 ### Do:
 
-- **Do** make the source the primary visual artifact and attach claims to exact visible provenance.
+- **Do** make the source the primary visual artifact and open exact provenance in situ from its attached badge.
 - **Do** use accession labels, revision identifiers, and tabular numerals to make evidence feel inspectable.
+- **Do** keep the compact Session record limited to active Source Claims and practice attempts.
 - **Do** keep contextual approval controls beside the proposal and repeat every unresolved item in the consolidated queue.
-- **Do** preserve readable body copy, clear keyboard focus, reduced-motion behavior, and 44px narrow-screen touch targets.
+- **Do** support hover, click, keyboard focus, touch toggle, Escape/outside-click dismissal, focus return, reduced-motion disclosure, and 44px narrow-screen touch targets.
 - **Do** use material layers, hairlines, and tonal washes before reaching for shadow.
 
 ### Don't:
 
 - **Don't** organize the workstation around a dominant chat rail.
 - **Don't** use gradients, glassy floating cards, soft rounded dashboards, or decorative color as substitutes for hierarchy.
-- **Don't** hide provenance behind a secondary journey or summarize away the exact citation path.
+- **Don't** send provenance to a bottom strip, distant side panel, or secondary journey, and don't summarize away the exact citation path.
 - **Don't** use green and orange interchangeably; their evidentiary meanings are fixed.
 - **Don't** imply that a learner-state mutation has happened before explicit human approval.
