@@ -1,0 +1,1771 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light" />
+    <title>TutorDesk — Workspace prototype</title>
+    <style>
+      @font-face {
+        font-family: "Atkinson";
+        src: url("./fonts/atkinson-regular.ttf") format("truetype");
+        font-weight: 400;
+        font-display: swap;
+      }
+
+      @font-face {
+        font-family: "Atkinson";
+        src: url("./fonts/atkinson-bold.ttf") format("truetype");
+        font-weight: 700;
+        font-display: swap;
+      }
+
+      @font-face {
+        font-family: "Barlow Lab";
+        src: url("./fonts/barlow-condensed-medium.ttf") format("truetype");
+        font-weight: 500;
+        font-display: swap;
+      }
+
+      @font-face {
+        font-family: "Barlow Lab";
+        src: url("./fonts/barlow-condensed-semibold.ttf") format("truetype");
+        font-weight: 600;
+        font-display: swap;
+      }
+
+      :root {
+        --paper: #f0f3f0;
+        --paper-strong: #fbfcfa;
+        --paper-muted: #dce2de;
+        --ink: #24302b;
+        --ink-muted: #58645e;
+        --line: #9da59e;
+        --line-soft: #cbcfc8;
+        --verdigris: #477c72;
+        --verdigris-deep: #29564e;
+        --verdigris-wash: #d9e6e1;
+        --accession: #93411f;
+        --accession-wash: #f2ddd1;
+        --warning: #733421;
+        --focus: #0b67a0;
+        --shadow: 0 18px 42px rgba(36, 48, 43, 0.15);
+        --label: "Barlow Lab", "Arial Narrow", sans-serif;
+        --body: "Atkinson", system-ui, sans-serif;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        margin: 0;
+        min-height: 100%;
+        background: var(--paper-muted);
+        color: var(--ink);
+        font-family: var(--body);
+      }
+
+      body {
+        min-height: 100vh;
+        overflow: hidden;
+      }
+
+      ::selection {
+        background: var(--verdigris);
+        color: #fff;
+      }
+
+      * {
+        scrollbar-width: thin;
+        scrollbar-color: var(--verdigris) var(--paper-muted);
+      }
+
+      *::-webkit-scrollbar {
+        width: 10px;
+        height: 10px;
+      }
+
+      *::-webkit-scrollbar-track {
+        background: var(--paper-muted);
+      }
+
+      *::-webkit-scrollbar-thumb {
+        background: var(--verdigris);
+        border: 2px solid var(--paper-muted);
+      }
+
+      button,
+      input {
+        font: inherit;
+      }
+
+      button {
+        color: inherit;
+      }
+
+      button:focus-visible,
+      [tabindex]:focus-visible {
+        outline: 3px solid var(--focus);
+        outline-offset: 2px;
+      }
+
+      .lab-label {
+        font-family: var(--label);
+        font-size: 0.73rem;
+        font-weight: 600;
+        letter-spacing: 0.11em;
+        line-height: 1;
+        text-transform: uppercase;
+      }
+
+      .tabular {
+        font-variant-numeric: tabular-nums;
+      }
+
+      .app {
+        min-height: 100vh;
+        display: grid;
+        grid-template-rows: 54px 1fr;
+      }
+
+      .mobile-context-bar {
+        display: none;
+      }
+
+      .app-header {
+        display: grid;
+        grid-template-columns: minmax(180px, 1fr) minmax(280px, 2fr) minmax(250px, 1fr);
+        align-items: stretch;
+        border-bottom: 1px solid var(--ink);
+        background: var(--paper-strong);
+        position: relative;
+        z-index: 30;
+      }
+
+      .brand,
+      .workspace-identity,
+      .header-actions {
+        display: flex;
+        align-items: center;
+        min-width: 0;
+      }
+
+      .brand {
+        padding: 0 18px;
+        border-right: 1px solid var(--line);
+        font-family: var(--label);
+        font-size: 1.25rem;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .brand-mark {
+        width: 17px;
+        height: 17px;
+        margin-right: 10px;
+        background:
+          linear-gradient(90deg, transparent 45%, var(--paper-strong) 45% 55%, transparent 55%),
+          linear-gradient(var(--verdigris) 0 0);
+        border: 1px solid var(--verdigris-deep);
+      }
+
+      .workspace-identity {
+        padding: 0 18px;
+        gap: 12px;
+        overflow: hidden;
+      }
+
+      .workspace-identity strong {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .workspace-identity .lab-label {
+        color: var(--ink-muted);
+      }
+
+      .header-actions {
+        justify-content: flex-end;
+        border-left: 1px solid var(--line);
+      }
+
+      .header-button,
+      .queue-button {
+        height: 100%;
+        border: 0;
+        border-left: 1px solid var(--line);
+        background: transparent;
+        padding: 0 14px;
+        cursor: pointer;
+      }
+
+      .header-button:hover,
+      .queue-button:hover {
+        background: var(--verdigris-wash);
+      }
+
+      .queue-button {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        background: var(--accession-wash);
+      }
+
+      .queue-count {
+        display: inline-grid;
+        place-items: center;
+        min-width: 24px;
+        height: 24px;
+        padding: 0 6px;
+        background: var(--accession);
+        color: #fff;
+        font-family: var(--label);
+        font-size: 0.8rem;
+      }
+
+      #workspace-root {
+        min-height: 0;
+        overflow: hidden;
+      }
+
+      .variant-shell {
+        height: calc(100vh - 54px);
+        min-height: 0;
+        padding-bottom: 70px;
+      }
+
+      .surface {
+        background-color: var(--paper-strong);
+        background-image:
+          linear-gradient(rgba(71, 124, 114, 0.055) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(71, 124, 114, 0.055) 1px, transparent 1px);
+        background-size: 24px 24px;
+      }
+
+      .section-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        min-height: 39px;
+        padding: 0 12px;
+        border-bottom: 1px solid var(--line);
+        background: rgba(241, 239, 233, 0.94);
+      }
+
+      .accession-id {
+        color: var(--accession);
+        font-family: var(--label);
+        font-size: 0.74rem;
+        font-weight: 600;
+        letter-spacing: 0.07em;
+      }
+
+      .source-title {
+        margin: 0;
+        font-size: clamp(1.7rem, 2.6vw, 2.7rem);
+        line-height: 1.02;
+        letter-spacing: -0.028em;
+      }
+
+      .source-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 9px 18px;
+        margin: 12px 0 24px;
+        color: var(--ink-muted);
+        font-size: 0.86rem;
+      }
+
+      .source-text {
+        max-width: 71ch;
+        font-size: clamp(1rem, 1.1vw, 1.12rem);
+        line-height: 1.66;
+      }
+
+      .source-text p {
+        margin: 0 0 1.2em;
+      }
+
+      .source-text mark {
+        background: rgba(71, 124, 114, 0.18);
+        color: inherit;
+        padding: 0 0.15em;
+        box-decoration-break: clone;
+        -webkit-box-decoration-break: clone;
+      }
+
+      .citation-button {
+        display: inline-flex;
+        align-items: center;
+        min-height: 30px;
+        margin: 0 0.16em;
+        padding: 1px 6px 2px;
+        border: 1px solid var(--verdigris-deep);
+        border-radius: 999px;
+        background: var(--paper-strong);
+        color: var(--verdigris-deep);
+        font-family: var(--label);
+        font-size: 0.74rem;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        cursor: pointer;
+        vertical-align: 0.06em;
+      }
+
+      .citation-button:hover,
+      .citation-button[aria-pressed="true"] {
+        background: var(--verdigris-deep);
+        color: #fff;
+      }
+
+      .instrument-button,
+      .action-button,
+      .text-button {
+        border: 1px solid var(--ink);
+        background: var(--paper-strong);
+        min-height: 34px;
+        padding: 7px 11px;
+        font-family: var(--label);
+        font-size: 0.78rem;
+        font-weight: 600;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        cursor: pointer;
+      }
+
+      .instrument-button:hover,
+      .action-button:hover,
+      .text-button:hover {
+        background: var(--verdigris-wash);
+      }
+
+      .instrument-button[aria-pressed="true"],
+      .action-button.primary {
+        border-color: var(--verdigris-deep);
+        background: var(--verdigris-deep);
+        color: #fff;
+      }
+
+      .action-button.reject {
+        border-color: var(--warning);
+        color: var(--warning);
+      }
+
+      .action-button:disabled {
+        border-color: var(--line);
+        background: var(--paper-muted);
+        color: var(--ink-muted);
+        cursor: not-allowed;
+        text-decoration: line-through;
+      }
+
+      .status-stamp {
+        display: inline-flex;
+        align-items: center;
+        min-height: 26px;
+        padding: 2px 7px;
+        border: 1px solid currentColor;
+        color: var(--accession);
+        font-family: var(--label);
+        font-size: 0.72rem;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .status-stamp.approved {
+        color: var(--verdigris-deep);
+      }
+
+      .callout {
+        padding: 12px;
+        background: var(--accession-wash);
+        border: 1px solid var(--accession);
+      }
+
+      .callout h3,
+      .evidence-panel h3,
+      .review-item h3 {
+        margin: 0 0 8px;
+        font-size: 1rem;
+        line-height: 1.2;
+      }
+
+      .callout p,
+      .evidence-panel p,
+      .review-item p {
+        margin: 0;
+        font-size: 0.88rem;
+        line-height: 1.45;
+      }
+
+      .proposal-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 7px;
+        margin-top: 12px;
+      }
+
+      .evidence-path {
+        display: grid;
+        gap: 0;
+        margin-top: 10px;
+      }
+
+      .peel-reveal {
+        transform-origin: left center;
+        animation: peel-reveal 360ms cubic-bezier(0.16, 1, 0.3, 1) both;
+      }
+
+      @keyframes peel-reveal {
+        0% {
+          opacity: 0.3;
+          clip-path: inset(0 100% 0 0);
+          transform: translateX(12px) rotate(0.25deg);
+        }
+        100% {
+          opacity: 1;
+          clip-path: inset(0 0 0 0);
+          transform: translateX(0) rotate(0);
+        }
+      }
+
+      .evidence-step {
+        position: relative;
+        padding: 9px 10px 9px 26px;
+        border-top: 1px solid var(--line);
+        font-size: 0.82rem;
+        line-height: 1.35;
+      }
+
+      .evidence-step::before {
+        content: "";
+        position: absolute;
+        left: 10px;
+        top: 13px;
+        width: 7px;
+        height: 7px;
+        background: var(--verdigris);
+      }
+
+      .evidence-step:not(:last-child)::after {
+        content: "";
+        position: absolute;
+        left: 13px;
+        top: 20px;
+        bottom: -9px;
+        width: 1px;
+        background: var(--verdigris);
+      }
+
+      .claim-card {
+        padding: 12px;
+        border-top: 1px solid var(--line);
+        background: rgba(251, 250, 246, 0.82);
+      }
+
+      .claim-card.is-selected {
+        background: var(--verdigris-wash);
+      }
+
+      .claim-card button {
+        margin-top: 8px;
+      }
+
+      .review-drawer {
+        position: fixed;
+        z-index: 80;
+        top: 54px;
+        right: 0;
+        bottom: 0;
+        width: min(420px, 100vw);
+        display: grid;
+        grid-template-rows: auto 1fr;
+        background: var(--paper-strong);
+        border-left: 1px solid var(--ink);
+        box-shadow: var(--shadow);
+        transform: translateX(104%);
+        transition: transform 240ms cubic-bezier(0.2, 0.75, 0.25, 1);
+      }
+
+      .drawer-scrim {
+        position: fixed;
+        z-index: 70;
+        inset: 54px 0 0;
+        background: rgba(36, 48, 43, 0.28);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 180ms ease-out;
+      }
+
+      .drawer-scrim.is-open {
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      .review-drawer.is-open {
+        transform: translateX(0);
+      }
+
+      .review-drawer-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        min-height: 58px;
+        padding: 10px 14px;
+        border-bottom: 1px solid var(--ink);
+        background: var(--accession-wash);
+      }
+
+      .review-drawer-head h2 {
+        margin: 0;
+        font-size: 1.1rem;
+      }
+
+      .review-list {
+        overflow-y: auto;
+      }
+
+      .review-item {
+        padding: 16px;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .review-item.is-resolved {
+        background: var(--verdigris-wash);
+      }
+
+      .review-type {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+        margin-bottom: 10px;
+      }
+
+      .prototype-switcher {
+        position: fixed;
+        z-index: 100;
+        left: 50%;
+        bottom: 12px;
+        transform: translateX(-50%);
+        display: grid;
+        grid-template-columns: 42px minmax(230px, 1fr) 42px;
+        align-items: center;
+        width: min(430px, calc(100vw - 20px));
+        min-width: 0;
+        border: 1px solid #fff;
+        background: #18231f;
+        color: #fff;
+        box-shadow: 0 12px 30px rgba(24, 35, 31, 0.3);
+      }
+
+      .prototype-switcher button {
+        height: 46px;
+        border: 0;
+        background: transparent;
+        color: #fff;
+        cursor: pointer;
+        font-size: 1.15rem;
+      }
+
+      .prototype-switcher button:hover {
+        background: var(--verdigris);
+      }
+
+      .variant-label {
+        min-width: 0;
+        padding: 0 10px;
+        text-align: center;
+        overflow: hidden;
+      }
+
+      .variant-label strong,
+      .variant-label small {
+        display: block;
+      }
+
+      .variant-label strong {
+        font-family: var(--label);
+        font-size: 0.88rem;
+        letter-spacing: 0.07em;
+        text-transform: uppercase;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+
+      .variant-label small {
+        margin-top: 2px;
+        color: #b8c8c1;
+        font-size: 0.7rem;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+
+      /* Variant A: a stable bench around the specimen. */
+      .bench-layout {
+        height: 100%;
+        display: grid;
+        grid-template-columns: 212px minmax(430px, 1fr) minmax(280px, 360px);
+        grid-template-rows: minmax(0, 1fr) 62px;
+      }
+
+      .bench-vault {
+        grid-row: 1 / 3;
+        min-width: 0;
+        overflow-y: auto;
+        border-right: 1px solid var(--ink);
+        background: var(--paper);
+      }
+
+      .bench-source {
+        min-width: 0;
+        overflow-y: auto;
+        border-right: 1px solid var(--ink);
+      }
+
+      .bench-source-inner {
+        min-height: 100%;
+        padding: clamp(28px, 4vw, 62px);
+      }
+
+      .bench-inspector {
+        min-width: 0;
+        overflow-y: auto;
+        background: var(--paper-strong);
+      }
+
+      .bench-dock {
+        min-width: 0;
+        display: grid;
+        grid-template-columns: repeat(4, minmax(90px, 1fr)) minmax(190px, 1.6fr);
+        align-items: stretch;
+        border-top: 1px solid var(--ink);
+        background: var(--paper-strong);
+      }
+
+      .bench-dock .instrument-button {
+        border: 0;
+        border-right: 1px solid var(--line);
+        min-height: 61px;
+      }
+
+      .instrument-readout {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        min-width: 0;
+        padding: 7px 14px;
+      }
+
+      .instrument-readout strong {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        font-size: 0.87rem;
+      }
+
+      .vault-group {
+        padding: 14px 12px;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .vault-group h2 {
+        margin: 0 0 11px;
+        font-size: 0.95rem;
+      }
+
+      .source-list {
+        display: grid;
+        gap: 4px;
+      }
+
+      .source-record {
+        width: 100%;
+        border: 0;
+        border-top: 1px solid var(--line-soft);
+        background: transparent;
+        padding: 9px 4px;
+        text-align: left;
+        cursor: pointer;
+      }
+
+      .source-record[aria-current="true"] {
+        background: var(--verdigris-wash);
+      }
+
+      .source-record strong,
+      .source-record span {
+        display: block;
+      }
+
+      .source-record span {
+        margin-top: 3px;
+        color: var(--ink-muted);
+        font-size: 0.74rem;
+      }
+
+      /* Variant B: source stage with physical examination layers. */
+      .layers-layout {
+        position: relative;
+        height: 100%;
+        overflow: hidden;
+        background: #dadbd5;
+      }
+
+      .layers-ribbon {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 50px;
+        display: flex;
+        align-items: stretch;
+        border-bottom: 1px solid var(--ink);
+        background: var(--paper-strong);
+      }
+
+      .ribbon-block {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 0 14px;
+        border-right: 1px solid var(--line);
+      }
+
+      .ribbon-block.grow {
+        flex: 1;
+      }
+
+      .layers-stage {
+        position: absolute;
+        top: 50px;
+        right: 76px;
+        bottom: 0;
+        left: 0;
+        overflow: auto;
+        padding: 5vh 24vw 12vh 7vw;
+      }
+
+      .source-sheet {
+        position: relative;
+        min-height: 760px;
+        padding: clamp(32px, 5vw, 76px);
+        background: var(--paper-strong);
+        box-shadow: var(--shadow);
+      }
+
+      .source-sheet::before {
+        content: "SOURCE REV. 04 · IMMUTABLE";
+        position: absolute;
+        top: 16px;
+        right: 18px;
+        color: var(--verdigris-deep);
+        font-family: var(--label);
+        font-size: 0.7rem;
+        letter-spacing: 0.08em;
+      }
+
+      .film-layer {
+        position: absolute;
+        z-index: 4;
+        width: min(360px, 34vw);
+        padding: 15px;
+        border: 1px solid currentColor;
+        background: rgba(217, 230, 225, 0.93);
+        color: var(--verdigris-deep);
+        backdrop-filter: blur(4px);
+        transition: transform 260ms cubic-bezier(0.2, 0.75, 0.25, 1);
+      }
+
+      .film-layer:hover,
+      .film-layer:focus-within {
+        transform: translateX(-8px);
+      }
+
+      .film-learning {
+        top: 84px;
+        right: 4vw;
+      }
+
+      .film-proposal {
+        right: 2vw;
+        bottom: 95px;
+        background: rgba(242, 223, 211, 0.95);
+        color: var(--warning);
+      }
+
+      .layer-tools {
+        position: absolute;
+        z-index: 12;
+        top: 50px;
+        right: 0;
+        bottom: 0;
+        width: 76px;
+        display: grid;
+        align-content: start;
+        border-left: 1px solid var(--ink);
+        background: var(--paper-strong);
+      }
+
+      .layer-tools .instrument-button {
+        min-height: 72px;
+        padding: 8px 4px;
+        border: 0;
+        border-bottom: 1px solid var(--line);
+        writing-mode: vertical-rl;
+        transform: rotate(180deg);
+      }
+
+      .provenance-strip {
+        position: absolute;
+        z-index: 8;
+        right: 76px;
+        bottom: 0;
+        left: 0;
+        min-height: 67px;
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding: 10px 18px;
+        border-top: 1px solid var(--ink);
+        background: rgba(241, 239, 233, 0.97);
+      }
+
+      .path-chip {
+        position: relative;
+        padding: 8px 12px;
+        border: 1px solid var(--line);
+        background: var(--paper-strong);
+        font-size: 0.78rem;
+      }
+
+      .path-chip:not(:last-child)::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        right: -15px;
+        width: 14px;
+        border-top: 1px solid var(--verdigris-deep);
+      }
+
+      /* Variant C: claim-aligned evidence ledger. */
+      .ledger-layout {
+        height: 100%;
+        display: grid;
+        grid-template-rows: 46px minmax(0, 1fr);
+        background: var(--paper-strong);
+      }
+
+      .ledger-tools {
+        display: grid;
+        grid-template-columns: minmax(250px, 1.5fr) repeat(4, minmax(95px, 0.55fr)) minmax(190px, 0.9fr);
+        border-bottom: 1px solid var(--ink);
+      }
+
+      .ledger-tools > * {
+        border-right: 1px solid var(--line);
+      }
+
+      .ledger-context {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        min-width: 0;
+        padding: 0 13px;
+      }
+
+      .ledger-context strong {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+
+      .ledger-tools .instrument-button {
+        min-height: 45px;
+        border: 0;
+      }
+
+      .ledger-scroll {
+        overflow: auto;
+      }
+
+      .ledger-header,
+      .ledger-row {
+        display: grid;
+        grid-template-columns: minmax(360px, 5fr) minmax(240px, 3fr) minmax(250px, 3fr) minmax(190px, 2fr);
+        min-width: 1100px;
+      }
+
+      .ledger-row.is-selected .source-cell {
+        box-shadow: inset 5px 0 0 var(--verdigris);
+      }
+
+      .ledger-header {
+        position: sticky;
+        z-index: 5;
+        top: 0;
+        min-height: 35px;
+        background: var(--ink);
+        color: #fff;
+      }
+
+      .ledger-header > div {
+        display: flex;
+        align-items: center;
+        padding: 0 12px;
+        border-right: 1px solid #6f7b75;
+      }
+
+      .ledger-row {
+        min-height: 226px;
+        border-bottom: 1px solid var(--ink);
+      }
+
+      .ledger-cell {
+        min-width: 0;
+        padding: 17px;
+        border-right: 1px solid var(--line);
+        background: var(--paper-strong);
+      }
+
+      .ledger-cell.source-cell {
+        background-color: var(--paper);
+        background-image: linear-gradient(90deg, transparent 31px, rgba(71, 124, 114, 0.16) 32px, transparent 33px);
+        padding-left: 49px;
+      }
+
+      .ledger-cell h2,
+      .ledger-cell h3 {
+        margin: 0 0 10px;
+      }
+
+      .ledger-cell h2 {
+        font-size: 1.22rem;
+      }
+
+      .ledger-cell h3 {
+        font-size: 0.98rem;
+      }
+
+      .ledger-cell p {
+        margin: 0 0 12px;
+        line-height: 1.5;
+      }
+
+      .ledger-path {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 5px;
+      }
+
+      .ledger-node {
+        padding: 5px 7px;
+        border: 1px solid var(--verdigris-deep);
+        background: var(--verdigris-wash);
+        font-size: 0.75rem;
+      }
+
+      .ledger-arrow {
+        width: 16px;
+        border-top: 1px solid var(--verdigris-deep);
+      }
+
+      .synthetic-note {
+        padding: 7px 9px;
+        border: 1px dashed var(--line);
+        color: var(--ink-muted);
+        font-size: 0.74rem;
+      }
+
+      .context-review {
+        margin-top: 22px;
+        padding: 12px;
+        border: 1px solid var(--verdigris-deep);
+        background: var(--verdigris-wash);
+      }
+
+      .context-review .proposal-actions {
+        margin-top: 10px;
+      }
+
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+      }
+
+      @media (max-width: 1050px) {
+        body {
+          overflow: auto;
+        }
+
+        .app-header {
+          grid-template-columns: minmax(160px, 0.8fr) 1.4fr auto;
+        }
+
+        .header-button.language,
+        .header-button.provider {
+          display: none;
+        }
+
+        .bench-layout {
+          grid-template-columns: 176px minmax(390px, 1fr) 290px;
+        }
+
+        .layers-stage {
+          padding-right: 31vw;
+        }
+      }
+
+      @media (max-width: 760px) {
+        body {
+          overflow: auto;
+        }
+
+        .app {
+          display: block;
+        }
+
+        .mobile-context-bar {
+          display: grid;
+          grid-template-columns: minmax(0, 1fr) auto;
+          min-height: 44px;
+          border-bottom: 1px solid var(--ink);
+          background: var(--paper-strong);
+        }
+
+        .mobile-context-bar button {
+          min-width: 0;
+          min-height: 44px;
+          overflow: hidden;
+          border: 0;
+          border-right: 1px solid var(--line);
+          background: transparent;
+          padding: 7px 12px;
+          text-align: left;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+
+        .mobile-context-bar button:last-child {
+          border-right: 0;
+        }
+
+        .app-header {
+          position: sticky;
+          top: 0;
+          grid-template-columns: 1fr auto;
+          min-height: 54px;
+        }
+
+        .workspace-identity {
+          display: none;
+        }
+
+        .brand {
+          border-right: 0;
+        }
+
+        .queue-button {
+          border-left: 1px solid var(--line);
+        }
+
+        .variant-shell {
+          height: auto;
+          min-height: calc(100vh - 54px);
+          padding-bottom: 78px;
+        }
+
+        .bench-layout {
+          display: block;
+          height: auto;
+        }
+
+        .bench-vault {
+          display: none;
+        }
+
+        .bench-source,
+        .bench-inspector {
+          border-right: 0;
+        }
+
+        .bench-source-inner {
+          padding: 28px 20px;
+        }
+
+        .bench-dock {
+          position: sticky;
+          z-index: 10;
+          bottom: 68px;
+          grid-template-columns: repeat(4, 1fr);
+          border-bottom: 1px solid var(--ink);
+        }
+
+        .instrument-readout {
+          display: none;
+        }
+
+        .layers-layout {
+          display: flex;
+          min-height: 0;
+          flex-direction: column;
+          overflow: visible;
+        }
+
+        .layers-ribbon {
+          position: static;
+          order: 1;
+          overflow-x: auto;
+          flex: 0 0 50px;
+        }
+
+        .layers-stage {
+          position: static;
+          order: 2;
+          display: flex;
+          flex-direction: column;
+          overflow: visible;
+          padding: 24px 14px;
+        }
+
+        .source-sheet {
+          min-height: 0;
+          padding: 54px 20px 30px;
+        }
+
+        .film-layer {
+          position: static;
+          width: calc(100% - 28px);
+          margin: 14px;
+          transform: none;
+        }
+
+        .film-learning {
+          order: 2;
+        }
+
+        .film-proposal {
+          order: 3;
+        }
+
+        .layer-tools {
+          position: sticky;
+          z-index: 15;
+          order: 4;
+          top: auto;
+          right: auto;
+          bottom: 0;
+          left: auto;
+          width: auto;
+          grid-template-columns: repeat(4, 1fr);
+          border-top: 1px solid var(--ink);
+          border-left: 0;
+        }
+
+        .layer-tools .instrument-button {
+          min-height: 52px;
+          writing-mode: horizontal-tb;
+          transform: none;
+          border-right: 1px solid var(--line);
+        }
+
+        .provenance-strip {
+          position: static;
+          order: 3;
+          display: flex;
+          min-height: 72px;
+          overflow-x: auto;
+          border-bottom: 1px solid var(--ink);
+        }
+
+        .ledger-layout {
+          min-height: 1000px;
+        }
+
+        .ledger-tools {
+          grid-template-columns: 1fr 1fr;
+          height: auto;
+        }
+
+        .ledger-context,
+        .ledger-tools .instrument-button:nth-of-type(n + 3),
+        .ledger-tools .instrument-readout {
+          display: none;
+        }
+
+        .ledger-header {
+          display: none;
+        }
+
+        .ledger-row {
+          display: block;
+          min-width: 0;
+        }
+
+        .ledger-cell {
+          border-right: 0;
+          border-bottom: 1px solid var(--line);
+        }
+
+        .prototype-switcher {
+          grid-template-columns: 40px minmax(0, 1fr) 40px;
+        }
+
+        .citation-button,
+        .action-button,
+        .text-button {
+          min-height: 44px;
+          padding-top: 9px;
+          padding-bottom: 9px;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          scroll-behavior: auto !important;
+          transition-duration: 0.01ms !important;
+        }
+
+        .peel-reveal {
+          animation: none !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app">
+      <header class="app-header">
+        <div class="brand"><span class="brand-mark" aria-hidden="true"></span>TutorDesk</div>
+        <div class="workspace-identity">
+          <span class="lab-label">Workspace</span>
+          <strong>Thermodynamics · Foundations &amp; Entropy</strong>
+          <span class="status-stamp">Local</span>
+        </div>
+        <div class="header-actions">
+          <button class="header-button provider" type="button">Gemini 2.5 Pro</button>
+          <button class="header-button language" type="button" aria-label="Language: English">EN / VI</button>
+          <button class="queue-button" type="button" data-action="toggle-queue" aria-expanded="false">
+            <span class="lab-label">Review</span>
+            <span class="queue-count tabular" data-review-count>3</span>
+          </button>
+        </div>
+      </header>
+
+      <nav class="mobile-context-bar" aria-label="Workspace and Source Vault context">
+        <button type="button"><span class="lab-label">Workspace</span> · Thermodynamics</button>
+        <button type="button"><span class="lab-label">Source Vault</span> · 12</button>
+      </nav>
+
+      <main id="workspace-root"></main>
+    </div>
+
+    <div class="drawer-scrim" id="drawer-scrim" data-action="close-queue" aria-hidden="true"></div>
+
+    <aside class="review-drawer" id="review-drawer" role="dialog" aria-modal="true" aria-labelledby="review-heading" aria-hidden="true" tabindex="-1" inert>
+      <div class="review-drawer-head">
+        <div>
+          <span class="lab-label">Consolidated approvals</span>
+          <h2 id="review-heading">Review queue</h2>
+        </div>
+        <button class="text-button" type="button" data-action="close-queue">Close</button>
+      </div>
+      <div class="review-list" id="review-list"></div>
+    </aside>
+
+    <div class="prototype-switcher" id="prototype-switcher" aria-label="Prototype variants">
+      <button type="button" data-action="previous-variant" aria-label="Previous variant">
+        <svg aria-hidden="true" width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M15 9H3M7 5L3 9L7 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"/></svg>
+      </button>
+      <div class="variant-label">
+        <strong id="variant-label">A · Examination Bench</strong>
+        <small id="variant-state">Source S1 · Quiz active · 3 reviews</small>
+      </div>
+      <button type="button" data-action="next-variant" aria-label="Next variant">
+        <svg aria-hidden="true" width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M3 9H15M11 5L15 9L11 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"/></svg>
+      </button>
+    </div>
+
+    <div class="sr-only" id="live-region" aria-live="assertive"></div>
+
+    <script>
+      const variants = {
+        A: { name: "Examination Bench", description: "stable source + side inspector" },
+        B: { name: "Reversible Layers", description: "source stage + peelable films" },
+        C: { name: "Evidence Ledger", description: "claim-aligned study sequence" },
+      };
+
+      const state = {
+        variant: new URLSearchParams(location.search).get("variant")?.toUpperCase() || "A",
+        capability: "Quiz",
+        selectedClaim: "S1",
+        queueOpen: false,
+        reviews: {
+          memory: { status: "pending", type: "Memory Proposal", title: "Prefers causal explanations before equations" },
+          boardroom: { status: "pending", type: "Boardroom Recommendation", title: "Revisit microstate multiplicity before the next quiz" },
+          research: { status: "pending", type: "Source promotion", title: "Promote the captured Clausius paper into the Source Vault" },
+        },
+      };
+
+      let queueTrigger = null;
+
+      if (!variants[state.variant]) state.variant = "A";
+
+      const claims = {
+        S1: {
+          title: "Entropy tracks the number of accessible microstates",
+          source: "Thermodynamic Foundations · rev. 04 · p. 42 · paragraph 3",
+          detail: "The claim is anchored to the exact paragraph highlighted in the active immutable source revision.",
+          path: ["Source Claim S1", "rev. 04 / p. 42 / ¶3", "SHA-256 …8e91"],
+        },
+        S2: {
+          title: "Macroscopic irreversibility is statistical",
+          source: "Thermodynamic Foundations · rev. 04 · p. 43 · equation 6",
+          detail: "The explanation cites both the prose statement and the equation defining multiplicity.",
+          path: ["Source Claim S2", "rev. 04 / p. 43 / eq. 6", "SHA-256 …8e91"],
+        },
+        M1: {
+          title: "Learner benefits from causal framing",
+          source: "Learner Insight L3 · proposed from two Contextual Facts",
+          detail: "This inference cannot influence personalization until it is approved.",
+          path: ["Learner Insight L3", "Contextual Fact L2 / CF-18", "Raw Event L1 / quiz-247"],
+        },
+      };
+
+      const sourceExcerpt = `
+        <article class="source-text">
+          <p>
+            A macrostate does not specify every molecular position and momentum. Instead, it collects many possible microstates under the same observable description.
+            <mark>The entropy of the macrostate increases with the number of microstates compatible with it.</mark>
+            <button class="citation-button claim-trigger" type="button" data-claim="S1" aria-pressed="${state.selectedClaim === "S1"}">S1 · p.42 ¶3</button>
+          </p>
+          <p>
+            This is why an isolated system overwhelmingly moves toward macrostates that can be realized in more ways. The underlying dynamics need not prefer a temporal direction; the asymmetry appears because high-multiplicity states dominate the accessible phase space.
+            <button class="citation-button claim-trigger" type="button" data-claim="S2" aria-pressed="${state.selectedClaim === "S2"}">S2 · p.43 eq.6</button>
+          </p>
+          <p>
+            If a partition is removed, the gas spreads through the full container. Returning every molecule to the original half is not forbidden, but its probability is negligible compared with the number of dispersed arrangements.
+          </p>
+        </article>
+      `;
+
+      function sourceHeading() {
+        return `
+          <h1 class="source-title">Why entropy has a direction</h1>
+          <div class="source-meta tabular">
+            <span class="status-stamp">Synthetic specimen</span>
+            <span>Thermodynamic Foundations</span>
+            <span>Revision 04</span>
+            <span>Pages 42–43</span>
+            <span>3 cited claims</span>
+          </div>
+        `;
+      }
+
+      function capabilityButtons(className = "instrument-button") {
+        return ["Chat", "Quiz", "Research", "Visualize"]
+          .map((name) => `<button class="${className} capability-button" type="button" data-capability="${name}" aria-pressed="${state.capability === name}">${name}</button>`)
+          .join("");
+      }
+
+      function selectedEvidence(compact = false) {
+        const claim = claims[state.selectedClaim];
+        return `
+          <section class="evidence-panel peel-reveal" data-selected-evidence>
+            <div class="review-type">
+              <span class="lab-label">${state.selectedClaim.startsWith("M") ? "Learner-state provenance" : "Citation provenance"}</span>
+              <span class="accession-id">${state.selectedClaim}</span>
+            </div>
+            <h3>${claim.title}</h3>
+            ${compact ? "" : `<p>${claim.detail}</p>`}
+            <div class="evidence-path">
+              ${claim.path.map((step) => `<div class="evidence-step">${step}</div>`).join("")}
+            </div>
+          </section>
+        `;
+      }
+
+      function memoryProposal() {
+        const review = state.reviews.memory;
+        const resolved = review.status !== "pending";
+        return `
+          <section class="callout" data-contextual-review="memory">
+            <div class="review-type">
+              <span class="lab-label">Memory Proposal</span>
+              <span class="status-stamp ${review.status === "approved" ? "approved" : ""}">${review.status}</span>
+            </div>
+            <h3>Prefers causal explanations before equations</h3>
+            <p>Inferred from two Workspace-scoped quiz events. Inspect the L3 → L2 → L1 chain before allowing personalization.</p>
+            <button class="citation-button claim-trigger" type="button" data-claim="M1" aria-pressed="${state.selectedClaim === "M1"}">Trace M1</button>
+            <div class="proposal-actions">
+              <button class="action-button primary review-action" type="button" data-review="memory" data-decision="approved" ${resolved ? "disabled" : ""}>Approve</button>
+              <button class="action-button reject review-action" type="button" data-review="memory" data-decision="rejected" ${resolved ? "disabled" : ""}>Reject</button>
+            </div>
+          </section>
+        `;
+      }
+
+      function boardroomRecommendation() {
+        const review = state.reviews.boardroom;
+        const resolved = review.status !== "pending";
+        return `
+          <section class="context-review" data-contextual-review="boardroom">
+            <div class="review-type">
+              <span class="lab-label">Boardroom Recommendation · S1 + S2</span>
+              <span class="status-stamp ${review.status === "approved" ? "approved" : ""}">${review.status}</span>
+            </div>
+            <h3>Revisit microstate multiplicity before the next quiz</h3>
+            <p>Advisory output grounded in the two selected Source Claims. It does not change the Learner Model until you approve it.</p>
+            <div class="proposal-actions">
+              <button class="action-button primary review-action" type="button" data-review="boardroom" data-decision="approved" ${resolved ? "disabled" : ""}>Approve</button>
+              <button class="action-button reject review-action" type="button" data-review="boardroom" data-decision="rejected" ${resolved ? "disabled" : ""}>Reject</button>
+            </div>
+          </section>
+        `;
+      }
+
+      function variantA() {
+        return `
+          <div class="variant-shell">
+            <div class="bench-layout">
+              <aside class="bench-vault">
+                <div class="section-head"><span class="lab-label">Source Vault</span><span class="accession-id">12</span></div>
+                <section class="vault-group">
+                  <h2>Active sources</h2>
+                  <div class="source-list">
+                    <button class="source-record" type="button" aria-current="true"><strong>Thermodynamic Foundations</strong><span>PDF · rev. 04 · 218 pages</span></button>
+                    <button class="source-record" type="button"><strong>Boltzmann lecture notes</strong><span>PDF · rev. 02 · 64 pages</span></button>
+                    <button class="source-record" type="button"><strong>Entropy experiment</strong><span>Video · rev. 01 · 18:42</span></button>
+                  </div>
+                </section>
+                <section class="vault-group">
+                  <h2>Session record</h2>
+                  <p class="synthetic-note">Synthetic demonstration state. Nothing persists.</p>
+                  <p class="tabular">Started 09:14<br />6 Source Claims<br />2 practice attempts</p>
+                </section>
+              </aside>
+
+              <section class="bench-source surface">
+                <div class="section-head"><span class="lab-label">Source examination plane</span><span class="accession-id">SRC-04-042</span></div>
+                <div class="bench-source-inner">
+                  ${sourceHeading()}
+                  ${sourceExcerpt}
+                  ${boardroomRecommendation()}
+                </div>
+              </section>
+
+              <aside class="bench-inspector">
+                <div class="section-head"><span class="lab-label">Examination layers</span><span class="accession-id">LIVE</span></div>
+                <div class="claim-card">
+                  <div class="review-type"><span class="lab-label">${state.capability} instrument</span><span class="status-stamp approved">Grounded</span></div>
+                  <h3>${capabilityTitle()}</h3>
+                  <p>${capabilityText()}</p>
+                  <button class="citation-button claim-trigger" type="button" data-claim="S1" aria-pressed="${state.selectedClaim === "S1"}">Inspect S1</button>
+                  <button class="citation-button claim-trigger" type="button" data-claim="S2" aria-pressed="${state.selectedClaim === "S2"}">Inspect S2</button>
+                </div>
+                <div class="claim-card is-selected">${selectedEvidence()}</div>
+                <div class="claim-card">${memoryProposal()}</div>
+              </aside>
+
+              <nav class="bench-dock" aria-label="Learning capabilities">
+                ${capabilityButtons()}
+                <div class="instrument-readout"><span class="lab-label">Shared Session context</span><strong>Source 04 · Claims S1/S2 · Review due</strong></div>
+              </nav>
+            </div>
+          </div>
+        `;
+      }
+
+      function variantB() {
+        return `
+          <div class="variant-shell">
+            <div class="layers-layout">
+              <div class="layers-ribbon">
+                <div class="ribbon-block"><span class="lab-label">Source Vault / 12</span></div>
+                <div class="ribbon-block grow"><strong>Thermodynamic Foundations</strong><span class="accession-id">REV.04</span></div>
+                <div class="ribbon-block"><span class="lab-label">Layer focus</span><strong>${state.selectedClaim}</strong></div>
+              </div>
+
+              <div class="layers-stage surface">
+                <article class="source-sheet">
+                  ${sourceHeading()}
+                  ${sourceExcerpt}
+                  ${boardroomRecommendation()}
+                </article>
+                <section class="film-layer film-learning">
+                  <div class="review-type"><span class="lab-label">${state.capability} layer</span><span class="status-stamp approved">2 claims</span></div>
+                  <h3>${capabilityTitle()}</h3>
+                  <p>${capabilityText()}</p>
+                  <button class="citation-button claim-trigger" type="button" data-claim="S1" aria-pressed="${state.selectedClaim === "S1"}">S1</button>
+                  <button class="citation-button claim-trigger" type="button" data-claim="S2" aria-pressed="${state.selectedClaim === "S2"}">S2</button>
+                </section>
+                <section class="film-layer film-proposal">
+                  ${memoryProposal()}
+                </section>
+              </div>
+
+              <nav class="layer-tools" aria-label="Learning capabilities">${capabilityButtons()}</nav>
+
+              <div class="provenance-strip peel-reveal" aria-label="Visible provenance path">
+                <span class="lab-label">Selected path</span>
+                ${claims[state.selectedClaim].path.map((step) => `<span class="path-chip">${step}</span>`).join("")}
+              </div>
+            </div>
+          </div>
+        `;
+      }
+
+      function ledgerRow({ id, section, excerpt, learning, provenance, review }) {
+        return `
+          <section class="ledger-row ${state.selectedClaim === id ? "is-selected" : ""}" data-ledger-claim="${id}">
+            <div class="ledger-cell source-cell">
+              <span class="accession-id">${section}</span>
+              <h2>${claims[id]?.title || review.title}</h2>
+              <p>${excerpt}</p>
+              <button class="citation-button claim-trigger" type="button" data-claim="${id}" aria-pressed="${state.selectedClaim === id}">Inspect ${id}</button>
+            </div>
+            <div class="ledger-cell ${state.selectedClaim === id ? "peel-reveal" : ""}">
+              <span class="lab-label">${state.capability} move</span>
+              <h3>${learning.title}</h3>
+              <p>${learning.text}</p>
+            </div>
+            <div class="ledger-cell">
+              <span class="lab-label">Provenance path</span>
+              <div class="ledger-path">
+                ${provenance.map((node, index) => `<span class="ledger-node">${node}</span>${index < provenance.length - 1 ? '<span class="ledger-arrow" aria-hidden="true"></span>' : ""}`).join("")}
+              </div>
+            </div>
+            <div class="ledger-cell">
+              ${review.html}
+            </div>
+          </section>
+        `;
+      }
+
+      function variantC() {
+        return `
+          <div class="variant-shell">
+            <div class="ledger-layout">
+              <nav class="ledger-tools" aria-label="Learning capabilities">
+                <div class="ledger-context"><span class="lab-label">Source Vault / 12</span><strong>Why entropy has a direction</strong></div>
+                ${capabilityButtons()}
+                <div class="instrument-readout"><span class="lab-label">Rows</span><strong>2 claims + 1 proposal</strong></div>
+              </nav>
+              <div class="ledger-scroll">
+                <div class="ledger-header lab-label">
+                  <div>Source specimen</div><div>Learning move</div><div>Visible provenance</div><div>Approval state</div>
+                </div>
+                ${ledgerRow({
+                  id: "S1",
+                  section: "p.42 · paragraph 3",
+                  excerpt: "Entropy increases with the number of microstates compatible with the same observable macrostate.",
+                  learning: { title: "Explain causally", text: "Multiplicity makes equilibrium overwhelmingly typical without adding a new microscopic force." },
+                  provenance: ["Claim S1", "rev.04 / p.42 ¶3", "hash …8e91"],
+                  review: { title: "", html: '<span class="status-stamp approved">Source verified</span><p style="margin-top:12px">The claim locator resolves to the highlighted paragraph.</p>' },
+                })}
+                ${ledgerRow({
+                  id: "S2",
+                  section: "p.43 · equation 6",
+                  excerpt: "The temporal asymmetry is statistical: high-multiplicity states dominate the accessible phase space.",
+                  learning: { title: "Quiz the distinction", text: "Does the microscopic law forbid reversal, or does probability make reversal negligible?" },
+                  provenance: ["Claim S2", "rev.04 / p.43 eq.6", "hash …8e91"],
+                  review: { title: "", html: '<span class="status-stamp approved">Source verified</span><p style="margin-top:12px">Both the equation and its defining prose are attached.</p>' + boardroomRecommendation() },
+                })}
+                ${ledgerRow({
+                  id: "M1",
+                  section: "Inferred learner state",
+                  excerpt: "The learner performs better when a causal model is established before symbolic manipulation.",
+                  learning: { title: "Adapt the next explanation", text: "Lead with microstate multiplicity, then introduce the logarithmic expression." },
+                  provenance: ["Learner Insight L3", "Contextual Fact CF-18", "Raw Event quiz-247"],
+                  review: { title: state.reviews.memory.title, html: memoryProposal() },
+                })}
+              </div>
+            </div>
+          </div>
+        `;
+      }
+
+      function capabilityTitle() {
+        const titles = {
+          Chat: "Ask from the selected evidence",
+          Quiz: "Test the causal model, not recall alone",
+          Research: "Compare the source with captured external evidence",
+          Visualize: "Map microstates to the macrostate envelope",
+        };
+        return titles[state.capability];
+      }
+
+      function capabilityText() {
+        const copy = {
+          Chat: "The response uses the active source selection and exposes every Source Claim beside the sentence it supports.",
+          Quiz: "A short question distinguishes deterministic microscopic dynamics from statistically irreversible macroscopic behavior.",
+          Research: "External findings remain in a versioned Research Evidence Set until you approve Source Vault promotion.",
+          Visualize: "A phase-space diagram would reuse this Session context and keep its explanatory claims tied to S1 and S2.",
+        };
+        return copy[state.capability];
+      }
+
+      function pendingCount() {
+        return Object.values(state.reviews).filter((item) => item.status === "pending").length;
+      }
+
+      function renderReviewQueue() {
+        const descriptions = {
+          memory: "Workspace inference · provenance: L3 → CF-18 → quiz-247",
+          boardroom: "Advisory only · based on claims S1 and S2",
+          research: "Research Evidence Set RE-09 · 1 external source",
+        };
+        document.querySelector("#review-list").innerHTML = Object.entries(state.reviews)
+          .map(([key, review]) => `
+            <section class="review-item ${review.status !== "pending" ? "is-resolved" : ""}">
+              <div class="review-type"><span class="lab-label">${review.type}</span><span class="status-stamp ${review.status === "approved" ? "approved" : ""}">${review.status}</span></div>
+              <h3>${review.title}</h3>
+              <p>${descriptions[key]}</p>
+              <div class="proposal-actions">
+                <button class="action-button primary review-action" type="button" data-review="${key}" data-decision="approved" ${review.status !== "pending" ? "disabled" : ""}>Approve</button>
+                <button class="action-button reject review-action" type="button" data-review="${key}" data-decision="rejected" ${review.status !== "pending" ? "disabled" : ""}>Reject</button>
+              </div>
+            </section>
+          `)
+          .join("");
+      }
+
+      function render() {
+        const renderVariant = { A: variantA, B: variantB, C: variantC }[state.variant];
+        document.querySelector("#workspace-root").innerHTML = renderVariant();
+        renderReviewQueue();
+
+        const pending = pendingCount();
+        document.querySelectorAll("[data-review-count]").forEach((node) => (node.textContent = pending));
+        document.querySelector("#variant-label").textContent = `${state.variant} · ${variants[state.variant].name}`;
+        document.querySelector("#variant-state").textContent = `${state.selectedClaim} selected · ${state.capability} active · ${pending} reviews`;
+        document.title = `TutorDesk prototype — ${state.variant} ${variants[state.variant].name}`;
+        bindInteractions();
+      }
+
+      function selectClaim(id) {
+        state.selectedClaim = id;
+        render();
+        announce(`${id} selected. ${claims[id].path.join(" to ")}`);
+      }
+
+      function setCapability(name) {
+        state.capability = name;
+        render();
+        announce(`${name} capability active in the shared Session context.`);
+      }
+
+      function resolveReview(key, decision) {
+        state.reviews[key].status = decision;
+        render();
+        announce(`${state.reviews[key].type} ${decision}.`);
+      }
+
+      function toggleQueue(open = !state.queueOpen) {
+        state.queueOpen = open;
+        const drawer = document.querySelector("#review-drawer");
+        const scrim = document.querySelector("#drawer-scrim");
+        const app = document.querySelector(".app");
+        const switcher = document.querySelector("#prototype-switcher");
+        drawer.classList.toggle("is-open", open);
+        scrim.classList.toggle("is-open", open);
+        drawer.setAttribute("aria-hidden", String(!open));
+        document.querySelectorAll('[data-action="toggle-queue"]').forEach((button) => button.setAttribute("aria-expanded", String(open)));
+        if (open) {
+          queueTrigger = document.activeElement;
+          drawer.removeAttribute("inert");
+          app.setAttribute("inert", "");
+          switcher.setAttribute("inert", "");
+          drawer.querySelector("button").focus();
+        } else {
+          drawer.setAttribute("inert", "");
+          app.removeAttribute("inert");
+          switcher.removeAttribute("inert");
+          queueTrigger?.focus();
+        }
+      }
+
+      function changeVariant(direction) {
+        const keys = Object.keys(variants);
+        const nextIndex = (keys.indexOf(state.variant) + direction + keys.length) % keys.length;
+        state.variant = keys[nextIndex];
+        const url = new URL(location.href);
+        url.searchParams.set("variant", state.variant);
+        history.replaceState({}, "", url);
+        render();
+        announce(`Variant ${state.variant}, ${variants[state.variant].name}. ${variants[state.variant].description}.`);
+      }
+
+      function bindInteractions() {
+        document.querySelectorAll(".claim-trigger").forEach((button) => {
+          button.addEventListener("click", () => selectClaim(button.dataset.claim));
+        });
+
+        document.querySelectorAll(".capability-button").forEach((button) => {
+          button.addEventListener("click", () => setCapability(button.dataset.capability));
+        });
+
+        document.querySelectorAll(".review-action").forEach((button) => {
+          button.addEventListener("click", () => resolveReview(button.dataset.review, button.dataset.decision));
+        });
+      }
+
+      function announce(message) {
+        const region = document.querySelector("#live-region");
+        region.textContent = "";
+        requestAnimationFrame(() => (region.textContent = message));
+      }
+
+      document.addEventListener("click", (event) => {
+        const action = event.target.closest("[data-action]")?.dataset.action;
+        if (action === "toggle-queue") toggleQueue();
+        if (action === "close-queue") toggleQueue(false);
+        if (action === "previous-variant") changeVariant(-1);
+        if (action === "next-variant") changeVariant(1);
+      });
+
+      document.addEventListener("keydown", (event) => {
+        if (state.queueOpen && event.key === "Tab") {
+          const focusable = [...document.querySelectorAll("#review-drawer button:not(:disabled)")];
+          const first = focusable[0];
+          const last = focusable[focusable.length - 1];
+          if (event.shiftKey && document.activeElement === first) {
+            event.preventDefault();
+            last.focus();
+          } else if (!event.shiftKey && document.activeElement === last) {
+            event.preventDefault();
+            first.focus();
+          }
+          return;
+        }
+        const editable = event.target.matches("input, textarea, [contenteditable='true']");
+        if (editable) return;
+        if (event.key === "ArrowLeft") changeVariant(-1);
+        if (event.key === "ArrowRight") changeVariant(1);
+        if (event.key === "Escape" && state.queueOpen) toggleQueue(false);
+      });
+
+      const localPrototype = ["localhost", "127.0.0.1", ""].includes(location.hostname);
+      if (!localPrototype) document.querySelector("#prototype-switcher").hidden = true;
+
+      render();
+    </script>
+  </body>
+</html>
