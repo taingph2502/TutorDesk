@@ -1,0 +1,283 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-18T08:53:03.1063129Z",
+  "title": "Design System: TutorDesk Evidence Conservation Lab",
+  "extensions": {
+    "colorMeta": {
+      "mineral-paper": {
+        "role": "neutral",
+        "displayName": "Mineral Paper",
+        "canonical": "#f0f3f0",
+        "tonalRamp": ["oklch(15% 0.005 145.5)", "oklch(26% 0.005 145.5)", "oklch(38% 0.005 145.5)", "oklch(50% 0.005 145.5)", "oklch(62% 0.005 145.5)", "oklch(74% 0.005 145.5)", "oklch(86% 0.005 145.5)", "oklch(95% 0.005 145.5)"]
+      },
+      "specimen-white": {
+        "role": "neutral",
+        "displayName": "Specimen White",
+        "canonical": "#fbfcfa",
+        "tonalRamp": ["oklch(15% 0.003 128.5)", "oklch(26% 0.003 128.5)", "oklch(38% 0.003 128.5)", "oklch(50% 0.003 128.5)", "oklch(62% 0.003 128.5)", "oklch(74% 0.003 128.5)", "oklch(86% 0.003 128.5)", "oklch(95% 0.003 128.5)"]
+      },
+      "mineral-muted": {
+        "role": "neutral",
+        "displayName": "Muted Mineral",
+        "canonical": "#dce2de",
+        "tonalRamp": ["oklch(15% 0.008 157.1)", "oklch(26% 0.008 157.1)", "oklch(38% 0.008 157.1)", "oklch(50% 0.008 157.1)", "oklch(62% 0.008 157.1)", "oklch(74% 0.008 157.1)", "oklch(86% 0.008 157.1)", "oklch(95% 0.008 157.1)"]
+      },
+      "graphite": {
+        "role": "neutral",
+        "displayName": "Graphite",
+        "canonical": "#24302b",
+        "tonalRamp": ["oklch(15% 0.019 167.7)", "oklch(26% 0.019 167.7)", "oklch(38% 0.019 167.7)", "oklch(50% 0.019 167.7)", "oklch(62% 0.019 167.7)", "oklch(74% 0.019 167.7)", "oklch(86% 0.019 167.7)", "oklch(95% 0.019 167.7)"]
+      },
+      "graphite-muted": {
+        "role": "neutral",
+        "displayName": "Muted Graphite",
+        "canonical": "#58645e",
+        "tonalRamp": ["oklch(15% 0.018 164.2)", "oklch(26% 0.018 164.2)", "oklch(38% 0.018 164.2)", "oklch(50% 0.018 164.2)", "oklch(62% 0.018 164.2)", "oklch(74% 0.018 164.2)", "oklch(86% 0.018 164.2)", "oklch(95% 0.018 164.2)"]
+      },
+      "measurement-line": {
+        "role": "neutral",
+        "displayName": "Measurement Line",
+        "canonical": "#9da59e",
+        "tonalRamp": ["oklch(15% 0.013 149.2)", "oklch(26% 0.013 149.2)", "oklch(38% 0.013 149.2)", "oklch(50% 0.013 149.2)", "oklch(62% 0.013 149.2)", "oklch(74% 0.013 149.2)", "oklch(86% 0.013 149.2)", "oklch(95% 0.013 149.2)"]
+      },
+      "hairline-soft": {
+        "role": "neutral",
+        "displayName": "Soft Hairline",
+        "canonical": "#cbcfc8",
+        "tonalRamp": ["oklch(15% 0.010 131.4)", "oklch(26% 0.010 131.4)", "oklch(38% 0.010 131.4)", "oklch(50% 0.010 131.4)", "oklch(62% 0.010 131.4)", "oklch(74% 0.010 131.4)", "oklch(86% 0.010 131.4)", "oklch(95% 0.010 131.4)"]
+      },
+      "oxidized-green": {
+        "role": "primary",
+        "displayName": "Oxidized Green",
+        "canonical": "#477c72",
+        "tonalRamp": ["oklch(15% 0.059 180.5)", "oklch(26% 0.059 180.5)", "oklch(38% 0.059 180.5)", "oklch(50% 0.059 180.5)", "oklch(62% 0.059 180.5)", "oklch(74% 0.059 180.5)", "oklch(86% 0.059 180.5)", "oklch(95% 0.059 180.5)"]
+      },
+      "oxidized-green-deep": {
+        "role": "primary",
+        "displayName": "Deep Oxidized Green",
+        "canonical": "#29564e",
+        "tonalRamp": ["oklch(15% 0.052 180.7)", "oklch(26% 0.052 180.7)", "oklch(38% 0.052 180.7)", "oklch(50% 0.052 180.7)", "oklch(62% 0.052 180.7)", "oklch(74% 0.052 180.7)", "oklch(86% 0.052 180.7)", "oklch(95% 0.052 180.7)"]
+      },
+      "oxidized-green-wash": {
+        "role": "primary",
+        "displayName": "Oxidized Green Wash",
+        "canonical": "#d9e6e1",
+        "tonalRamp": ["oklch(15% 0.015 171.0)", "oklch(26% 0.015 171.0)", "oklch(38% 0.015 171.0)", "oklch(50% 0.015 171.0)", "oklch(62% 0.015 171.0)", "oklch(74% 0.015 171.0)", "oklch(86% 0.015 171.0)", "oklch(95% 0.015 171.0)"]
+      },
+      "accession-orange": {
+        "role": "secondary",
+        "displayName": "Accession Orange",
+        "canonical": "#93411f",
+        "tonalRamp": ["oklch(15% 0.120 41.5)", "oklch(26% 0.120 41.5)", "oklch(38% 0.120 41.5)", "oklch(50% 0.120 41.5)", "oklch(62% 0.120 41.5)", "oklch(74% 0.120 41.5)", "oklch(86% 0.120 41.5)", "oklch(95% 0.120 41.5)"]
+      },
+      "accession-orange-wash": {
+        "role": "secondary",
+        "displayName": "Accession Orange Wash",
+        "canonical": "#f2ddd1",
+        "tonalRamp": ["oklch(15% 0.028 51.8)", "oklch(26% 0.028 51.8)", "oklch(38% 0.028 51.8)", "oklch(50% 0.028 51.8)", "oklch(62% 0.028 51.8)", "oklch(74% 0.028 51.8)", "oklch(86% 0.028 51.8)", "oklch(95% 0.028 51.8)"]
+      },
+      "caution-oxide": {
+        "role": "tertiary",
+        "displayName": "Caution Oxide",
+        "canonical": "#733421",
+        "tonalRamp": ["oklch(15% 0.094 37.5)", "oklch(26% 0.094 37.5)", "oklch(38% 0.094 37.5)", "oklch(50% 0.094 37.5)", "oklch(62% 0.094 37.5)", "oklch(74% 0.094 37.5)", "oklch(86% 0.094 37.5)", "oklch(95% 0.094 37.5)"]
+      },
+      "focus-blue": {
+        "role": "tertiary",
+        "displayName": "Instrument Focus Blue",
+        "canonical": "#0b67a0",
+        "tonalRamp": ["oklch(15% 0.119 244.3)", "oklch(26% 0.119 244.3)", "oklch(38% 0.119 244.3)", "oklch(50% 0.119 244.3)", "oklch(62% 0.119 244.3)", "oklch(74% 0.119 244.3)", "oklch(86% 0.119 244.3)", "oklch(95% 0.119 244.3)"]
+      },
+      "inverse-white": {
+        "role": "neutral",
+        "displayName": "Inverse White",
+        "canonical": "#ffffff",
+        "tonalRamp": ["oklch(15% 0 0)", "oklch(26% 0 0)", "oklch(38% 0 0)", "oklch(50% 0 0)", "oklch(62% 0 0)", "oklch(74% 0 0)", "oklch(86% 0 0)", "oklch(95% 0 0)"]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Source Display",
+        "purpose": "Names the active source as the primary artifact."
+      },
+      "title": {
+        "displayName": "Evidence Title",
+        "purpose": "Names ledger rows, panels, and evidence groups."
+      },
+      "body": {
+        "displayName": "Reading Body",
+        "purpose": "Carries source excerpts and sustained explanatory reading."
+      },
+      "label": {
+        "displayName": "Accession Label",
+        "purpose": "Classifies instruments, revisions, state, and provenance nodes."
+      }
+    },
+    "shadows": [
+      {
+        "name": "raised-examination-plane",
+        "value": "0 18px 42px rgba(36, 48, 43, 0.15)",
+        "purpose": "Separates an examination sheet or open review drawer from the lab bench."
+      },
+      {
+        "name": "selected-evidence-edge",
+        "value": "inset 5px 0 0 #477c72",
+        "purpose": "Marks a selected source row without making it float."
+      }
+    ],
+    "motion": [
+      {
+        "name": "peel-reveal",
+        "value": "360ms cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "Reveals a claim's evidence path from the left edge like an examination film."
+      },
+      {
+        "name": "layer-shift",
+        "value": "260ms cubic-bezier(0.2, 0.75, 0.25, 1)",
+        "purpose": "Moves interactive examination film with restrained physicality."
+      },
+      {
+        "name": "drawer-slide",
+        "value": "240ms cubic-bezier(0.2, 0.75, 0.25, 1)",
+        "purpose": "Opens and closes the consolidated review drawer."
+      },
+      {
+        "name": "scrim-fade",
+        "value": "180ms ease-out",
+        "purpose": "Clarifies modal review state without competing with the drawer."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "workstation-compact",
+        "value": "1050px"
+      },
+      {
+        "name": "reading-sequence",
+        "value": "760px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Approval Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Confirms an explicit human approval or shows a selected learning instrument.",
+      "html": "<button class=\"ds-btn-primary\" type=\"button\">Approve</button>",
+      "css": ".ds-btn-primary { min-height: 34px; padding: 7px 11px; border: 1px solid var(--verdigris-deep, #29564e); border-radius: 0; background: var(--verdigris-deep, #29564e); color: #fff; font-family: var(--label, 'Barlow Lab', 'Arial Narrow', sans-serif); font-size: .78rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; cursor: pointer; } .ds-btn-primary:hover { background: var(--verdigris, #477c72); } .ds-btn-primary:active { background: var(--ink, #24302b); } .ds-btn-primary:focus-visible { outline: 3px solid var(--focus, #0b67a0); outline-offset: 2px; }"
+    },
+    {
+      "name": "Secondary Instrument Button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Runs or selects a capability without outranking the active source.",
+      "html": "<button class=\"ds-btn-instrument\" type=\"button\" aria-pressed=\"false\">Research</button>",
+      "css": ".ds-btn-instrument { min-height: 34px; padding: 7px 11px; border: 1px solid var(--ink, #24302b); border-radius: 0; background: var(--paper-strong, #fbfcfa); color: var(--ink, #24302b); font-family: var(--label, 'Barlow Lab', 'Arial Narrow', sans-serif); font-size: .78rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; cursor: pointer; } .ds-btn-instrument:hover { background: var(--verdigris-wash, #d9e6e1); } .ds-btn-instrument[aria-pressed='true'], .ds-btn-instrument:active { border-color: var(--verdigris-deep, #29564e); background: var(--verdigris-deep, #29564e); color: #fff; } .ds-btn-instrument:focus-visible { outline: 3px solid var(--focus, #0b67a0); outline-offset: 2px; }"
+    },
+    {
+      "name": "Reject Button",
+      "kind": "button",
+      "refersTo": "button-reject",
+      "description": "Rejects a proposed learner-state mutation with a distinct caution treatment.",
+      "html": "<button class=\"ds-btn-reject\" type=\"button\">Reject</button>",
+      "css": ".ds-btn-reject { min-height: 34px; padding: 7px 11px; border: 1px solid var(--warning, #733421); border-radius: 0; background: var(--paper-strong, #fbfcfa); color: var(--warning, #733421); font-family: var(--label, 'Barlow Lab', 'Arial Narrow', sans-serif); font-size: .78rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; cursor: pointer; } .ds-btn-reject:hover { background: var(--accession-wash, #f2ddd1); } .ds-btn-reject:active { background: var(--warning, #733421); color: #fff; } .ds-btn-reject:focus-visible { outline: 3px solid var(--focus, #0b67a0); outline-offset: 2px; }"
+    },
+    {
+      "name": "Citation Trigger",
+      "kind": "chip",
+      "refersTo": "citation-trigger",
+      "description": "Opens an exact citation or learner-state provenance path inline.",
+      "html": "<button class=\"ds-citation\" type=\"button\" aria-pressed=\"false\">S1 · p.42 ¶3</button>",
+      "css": ".ds-citation { min-height: 30px; padding: 1px 6px 2px; border: 1px solid var(--verdigris-deep, #29564e); border-radius: 999px; background: var(--paper-strong, #fbfcfa); color: var(--verdigris-deep, #29564e); font-family: var(--label, 'Barlow Lab', 'Arial Narrow', sans-serif); font-size: .74rem; font-weight: 600; letter-spacing: .04em; cursor: pointer; } .ds-citation:hover, .ds-citation[aria-pressed='true'], .ds-citation:active { background: var(--verdigris-deep, #29564e); color: #fff; } .ds-citation:focus-visible { outline: 3px solid var(--focus, #0b67a0); outline-offset: 2px; }"
+    },
+    {
+      "name": "Pending Status Stamp",
+      "kind": "chip",
+      "refersTo": "status-pending",
+      "description": "Marks a proposal that still requires an explicit human decision.",
+      "html": "<span class=\"ds-status-pending\">Pending</span>",
+      "css": ".ds-status-pending { display: inline-flex; align-items: center; min-height: 26px; padding: 2px 7px; border: 1px solid currentColor; border-radius: 0; background: var(--paper-strong, #fbfcfa); color: var(--accession, #93411f); font-family: var(--label, 'Barlow Lab', 'Arial Narrow', sans-serif); font-size: .72rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; }"
+    },
+    {
+      "name": "Source Record",
+      "kind": "nav",
+      "description": "Identifies a source revision in the vault while preserving active-source context.",
+      "html": "<button class=\"ds-source-record\" type=\"button\" aria-current=\"true\"><strong>Thermodynamic Foundations</strong><span>PDF · rev. 04 · 218 pages</span></button>",
+      "css": ".ds-source-record { width: 100%; padding: 9px 4px; border: 0; border-top: 1px solid var(--line-soft, #cbcfc8); border-radius: 0; background: transparent; color: var(--ink, #24302b); text-align: left; cursor: pointer; } .ds-source-record strong, .ds-source-record span { display: block; } .ds-source-record span { margin-top: 3px; color: var(--ink-muted, #58645e); font-size: .74rem; } .ds-source-record:hover, .ds-source-record[aria-current='true'] { background: var(--verdigris-wash, #d9e6e1); } .ds-source-record:active { box-shadow: inset 5px 0 0 var(--verdigris, #477c72); } .ds-source-record:focus-visible { outline: 3px solid var(--focus, #0b67a0); outline-offset: 2px; }"
+    },
+    {
+      "name": "Evidence Card",
+      "kind": "card",
+      "refersTo": "examination-card",
+      "description": "Contains a claim, explanation, or selected provenance layer on the examination plane.",
+      "html": "<article class=\"ds-evidence-card\"><span class=\"ds-evidence-label\">Citation provenance</span><h3>Entropy claim</h3><p>Exact evidence remains adjacent to the interpretation.</p></article>",
+      "css": ".ds-evidence-card { padding: 12px; border-top: 1px solid var(--line, #9da59e); border-radius: 0; background: var(--paper-strong, #fbfcfa); color: var(--ink, #24302b); } .ds-evidence-card:hover { background: var(--verdigris-wash, #d9e6e1); } .ds-evidence-card:focus-within { outline: 3px solid var(--focus, #0b67a0); outline-offset: 2px; } .ds-evidence-label { color: var(--ink-muted, #58645e); font-family: var(--label, 'Barlow Lab', 'Arial Narrow', sans-serif); font-size: .73rem; font-weight: 600; letter-spacing: .11em; text-transform: uppercase; } .ds-evidence-card h3 { margin: 8px 0; font-size: 1rem; line-height: 1.2; } .ds-evidence-card p { margin: 0; font-size: .88rem; line-height: 1.45; }"
+    },
+    {
+      "name": "Review Layer",
+      "kind": "custom",
+      "refersTo": "review-card",
+      "description": "Keeps a memory proposal visibly pending beside the evidence that produced it.",
+      "html": "<section class=\"ds-review-layer\"><div class=\"ds-review-head\"><span>Memory Proposal</span><b>Pending</b></div><p>Record the learner-state inference only after review.</p><div class=\"ds-review-actions\"><button type=\"button\">Approve</button><button type=\"button\">Reject</button></div></section>",
+      "css": ".ds-review-layer { padding: 12px; border: 1px solid var(--accession, #93411f); border-radius: 0; background: var(--accession-wash, #f2ddd1); color: var(--ink, #24302b); } .ds-review-layer:hover { border-color: var(--warning, #733421); } .ds-review-layer:focus-within { outline: 3px solid var(--focus, #0b67a0); outline-offset: 2px; } .ds-review-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; font-family: var(--label, 'Barlow Lab', 'Arial Narrow', sans-serif); font-size: .73rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; } .ds-review-head b { color: var(--accession, #93411f); } .ds-review-layer p { margin: 10px 0 12px; font-size: .88rem; line-height: 1.45; } .ds-review-actions { display: flex; gap: 7px; } .ds-review-actions button { min-height: 34px; padding: 7px 11px; border: 1px solid var(--ink, #24302b); border-radius: 0; background: var(--paper-strong, #fbfcfa); color: var(--ink, #24302b); font-family: var(--label, 'Barlow Lab', 'Arial Narrow', sans-serif); font-size: .78rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; cursor: pointer; } .ds-review-actions button:hover { background: var(--verdigris-wash, #d9e6e1); } .ds-review-actions button:active { background: var(--verdigris-deep, #29564e); color: #fff; } .ds-review-actions button:focus-visible { outline: 3px solid var(--focus, #0b67a0); outline-offset: 2px; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "Evidence Conservation Lab",
+    "overview": "TutorDesk treats knowledge as material under examination. Mineral paper, graphite notation, oxidized-green evidence marks, accession-orange review layers, hairline rules, and tabular identifiers make the interface feel like a working conservation bench: exacting, quiet, and visibly accountable.\n\nThe active source is the artifact, not background for a chat stream. Explanations, questions, provenance, and learner-state proposals appear as reversible examination layers beside the evidence that produced them. The system is dense without feeling compressed, and every consequential state change remains visibly subject to human approval.",
+    "keyCharacteristics": [
+      "Source-as-artifact rather than chat-as-center.",
+      "Archival labels, accession marks, and hairline measurement rules.",
+      "Mineral-white planes with graphite text and sparing chromatic state.",
+      "Exact provenance exposed beside claims and learner-state inferences.",
+      "Square controls and layered review materials with explicit approval states."
+    ],
+    "rules": [
+      {
+        "name": "The Chromatic Evidence Rule",
+        "body": "Green means grounded, selected, or traceable; orange means pending human review; neither color is ambient decoration.",
+        "section": "colors"
+      },
+      {
+        "name": "The Visible Focus Rule",
+        "body": "Keyboard focus uses the dedicated blue outline and must never be replaced by a subtle color shift.",
+        "section": "colors"
+      },
+      {
+        "name": "The Two-Voice Rule",
+        "body": "Atkinson carries meaning; Barlow Condensed carries classification, state, and control.",
+        "section": "typography"
+      },
+      {
+        "name": "The Source Majority Rule",
+        "body": "In every workstation composition, the source remains the largest or first reading plane; capability controls orbit it rather than becoming a dominant chat rail.",
+        "section": "layout"
+      },
+      {
+        "name": "The Evidentiary Depth Rule",
+        "body": "A layer may rise only when its overlap communicates source, provenance, or approval state.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Capsule Exception Rule",
+        "body": "Only inline citation triggers use the capsule radius; actions, stamps, panels, and navigation remain square.",
+        "section": "shapes"
+      }
+    ],
+    "dos": [
+      "Do make the source the primary visual artifact and attach claims to exact visible provenance.",
+      "Do use accession labels, revision identifiers, and tabular numerals to make evidence feel inspectable.",
+      "Do keep contextual approval controls beside the proposal and repeat every unresolved item in the consolidated queue.",
+      "Do preserve readable body copy, clear keyboard focus, reduced-motion behavior, and 44px narrow-screen touch targets.",
+      "Do use material layers, hairlines, and tonal washes before reaching for shadow."
+    ],
+    "donts": [
+      "Don't organize the workstation around a dominant chat rail.",
+      "Don't use gradients, glassy floating cards, soft rounded dashboards, or decorative color as substitutes for hierarchy.",
+      "Don't hide provenance behind a secondary journey or summarize away the exact citation path.",
+      "Don't use green and orange interchangeably; their evidentiary meanings are fixed.",
+      "Don't imply that a learner-state mutation has happened before explicit human approval."
+    ]
+  }
+}
