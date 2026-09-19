@@ -1,0 +1,30 @@
+{
+  "name": "tutordesk",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Local-first, citation-grounded learning workspace",
+  "license": "Apache-2.0",
+  "packageManager": "pnpm@12.4.1",
+  "engines": {
+    "node": ">=24 <25",
+    "pnpm": ">=12 <13"
+  },
+  "scripts": {
+    "dev": "pnpm --filter @tutordesk/web dev",
+    "build": "pnpm --recursive --if-present build",
+    "lint": "pnpm lint:js && uv run ruff check apps/server/src evals/src evals/tests tests tools",
+    "lint:js": "pnpm --recursive --if-present lint",
+    "typecheck": "pnpm typecheck:js && uv run pyright",
+    "typecheck:js": "pnpm --recursive --if-present typecheck",
+    "test": "pnpm test:unit && pnpm test:integration",
+    "test:unit": "pnpm test:js && uv run pytest -m unit",
+    "test:integration": "uv run pytest -m integration && pnpm --filter @tutordesk/web test:integration",
+    "test:js": "pnpm --recursive --if-present test:unit",
+    "eval": "uv run tutordesk-eval evals/fixtures/smoke.jsonl",
+    "inventory": "pnpm inventory:dependencies && pnpm inventory:licenses:js && pnpm inventory:licenses:python",
+    "inventory:dependencies": "pnpm list --recursive --depth Infinity && uv tree",
+    "inventory:licenses:js": "pnpm licenses list --json --prod",
+    "inventory:licenses:python": "uv run python tools/python_license_inventory.py",
+    "check": "pnpm lint && pnpm typecheck && pnpm test && pnpm eval && pnpm build"
+  }
+}

@@ -1,0 +1,2 @@
+{"id":"source-summary-en","language":"en","prompt":"Summarize the selected source and cite the supporting passage.","expected_terms":["source","citation"]}
+{"id":"source-summary-vi","language":"vi","prompt":"Tóm tắt nguồn đã chọn và trích dẫn đoạn văn hỗ trợ.","expected_terms":["nguồn","trích dẫn"]}

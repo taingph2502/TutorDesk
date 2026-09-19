@@ -1,0 +1,40 @@
+[dependency-groups]
+dev = [
+  "httpx2>=2.13.0,<3",
+  "pyright>=1.1.405,<2",
+  "pytest>=8.4.2,<9",
+  "pytest-cov>=7.0.0,<8",
+  "ruff>=0.13.2,<1",
+]
+
+[tool.uv.workspace]
+members = ["apps/server", "evals"]
+
+[tool.pytest.ini_options]
+addopts = "--strict-config --strict-markers"
+markers = [
+  "integration: exercises a public interface across package boundaries",
+  "unit: exercises one public module interface in isolation",
+]
+filterwarnings = [
+  "ignore:The anyio.abc.BlockingPortal alias is deprecated:DeprecationWarning:starlette.testclient",
+]
+testpaths = ["apps/server/tests", "evals/tests", "tests"]
+
+[tool.pyright]
+include = ["apps/server/src", "evals/src", "tools"]
+pythonVersion = "3.12"
+typeCheckingMode = "strict"
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM", "RUF"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["tutordesk", "tutordesk_evals"]
+
+[tool.ruff.lint.per-file-ignores]
+"**/tests/**" = ["S101"]

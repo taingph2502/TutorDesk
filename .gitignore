@@ -22,3 +22,28 @@
 .impeccable/live/deferred-svelte-component-accepts.json
 .impeccable/live/*.png
 # impeccable-ignore-end
+
+# JavaScript and Next.js
+node_modules/
+.next/
+*.tsbuildinfo
+coverage/
+playwright-report/
+test-results/
+
+# Python and uv
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.pyright/
+*.egg-info/
+
+# Local environment and build output
+.env
+.env.*
+!.env.example
+dist/
+build/
