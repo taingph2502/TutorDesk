@@ -1,0 +1,132 @@
+name: tutordesk
+
+services:
+  database:
+    image: pgvector/pgvector:0.8.6-pg18-bookworm
+    environment:
+      POSTGRES_DB: tutordesk
+      POSTGRES_PASSWORD_FILE: /run/secrets/database_password
+      POSTGRES_USER: tutordesk
+    secrets:
+      - database_password
+    volumes:
+      - database_data:/var/lib/postgresql
+    networks:
+      - data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready --username $${POSTGRES_USER} --dbname $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 3s
+      retries: 12
+      start_period: 10s
+    logging:
+      driver: local
+      options:
+        max-size: 10m
+        max-file: "3"
+    restart: unless-stopped
+    stop_grace_period: 30s
+
+  api:
+    build:
+      context: ../..
+      dockerfile: infra/compose/server.Dockerfile
+    environment:
+      TUTORDESK_API_HOST: 0.0.0.0
+      TUTORDESK_API_PORT: "8000"
+      TUTORDESK_DATABASE_HOST: database
+      TUTORDESK_DATABASE_NAME: tutordesk
+      TUTORDESK_DATABASE_PASSWORD_FILE: /run/secrets/database_password
+      TUTORDESK_DATABASE_PORT: "5432"
+      TUTORDESK_DATABASE_USER: tutordesk
+    secrets:
+      - database_password
+    depends_on:
+      database:
+        condition: service_healthy
+        restart: true
+    networks:
+      - edge
+      - data
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - >-
+          import urllib.request;
+          urllib.request.urlopen('http://127.0.0.1:8000/api/v1/health', timeout=3).read()
+      interval: 5s
+      timeout: 4s
+      retries: 12
+      start_period: 5s
+    init: true
+    tmpfs:
+      - /tmp
+    security_opt:
+      - no-new-privileges:true
+    logging:
+      driver: local
+      options:
+        max-size: 10m
+        max-file: "3"
+    restart: unless-stopped
+    stop_grace_period: 15s
+
+  web:
+    build:
+      context: ../..
+      dockerfile: infra/compose/web.Dockerfile
+      args:
+        TUTORDESK_API_ORIGIN: http://api:8000
+    depends_on:
+      api:
+        condition: service_healthy
+        restart: true
+    networks:
+      - edge
+    ports:
+      - name: workspace
+        target: 3000
+        published: "3000"
+        host_ip: 127.0.0.1
+        protocol: tcp
+    healthcheck:
+      test:
+        - CMD
+        - node
+        - -e
+        - >-
+          fetch('http://127.0.0.1:3000/api/v1/health')
+            .then((response) => { if (!response.ok) process.exit(1) })
+            .catch(() => process.exit(1))
+      interval: 5s
+      timeout: 4s
+      retries: 12
+      start_period: 5s
+    init: true
+    read_only: true
+    tmpfs:
+      - /app/apps/web/.next/cache
+      - /tmp
+    security_opt:
+      - no-new-privileges:true
+    logging:
+      driver: local
+      options:
+        max-size: 10m
+        max-file: "3"
+    restart: unless-stopped
+    stop_grace_period: 15s
+
+networks:
+  edge:
+  data:
+    internal: true
+
+secrets:
+  database_password:
+    environment: TUTORDESK_DATABASE_PASSWORD
+
+volumes:
+  database_data:

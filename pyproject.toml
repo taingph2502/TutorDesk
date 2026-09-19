@@ -13,6 +13,7 @@ members = ["apps/server"]
 [tool.pytest.ini_options]
 addopts = "--strict-config --strict-markers"
 markers = [
+  "compose: exercises the containerized application substrate",
   "integration: exercises a public interface across package boundaries",
   "unit: exercises one public module interface in isolation",
 ]
