@@ -21,6 +21,17 @@ class EvaluationFixture:
     expected_terms: tuple[str, ...]
 
 
+@dataclass(frozen=True, slots=True)
+class FixtureLocation:
+    """Human-readable location of one fixture record."""
+
+    path: Path
+    line_number: int
+
+    def error(self, message: str) -> ValueError:
+        return ValueError(f"{self.path}:{self.line_number}: {message}")
+
+
 def load_fixture_catalog(path: Path) -> tuple[EvaluationFixture, ...]:
     """Load and validate a UTF-8 JSON Lines evaluation catalog."""
     fixtures: list[EvaluationFixture] = []
@@ -30,26 +41,29 @@ def load_fixture_catalog(path: Path) -> tuple[EvaluationFixture, ...]:
         if not line.strip():
             continue
 
+        location = FixtureLocation(path, line_number)
         raw: object = json.loads(line)
         if not isinstance(raw, dict):
-            raise ValueError(f"{path}:{line_number}: fixture must be an object")
+            raise location.error("fixture must be an object")
         record = cast(dict[str, object], raw)
 
-        fixture_id = _required_string(record, "id", path, line_number)
-        prompt = _required_string(record, "prompt", path, line_number)
-        language_value = _required_string(record, "language", path, line_number)
+        fixture_id = _required_field(record, "id", location)
+        prompt = _required_field(record, "prompt", location)
+        language_value = _required_field(record, "language", location)
         if language_value not in SUPPORTED_LANGUAGES:
-            raise ValueError(f"{path}:{line_number}: unsupported language {language_value!r}")
+            raise location.error(f"unsupported language {language_value!r}")
         language = cast(SupportedLanguage, language_value)
 
         terms_value = record.get("expected_terms")
         if not isinstance(terms_value, list) or not terms_value:
-            raise ValueError(f"{path}:{line_number}: expected_terms must be a non-empty list")
+            raise location.error("expected_terms must be a non-empty list")
         terms = cast(list[object], terms_value)
-        expected_terms = tuple(_non_empty_term(term, path, line_number) for term in terms)
+        expected_terms = tuple(
+            _non_empty_string(term, "expected terms", location) for term in terms
+        )
 
         if fixture_id in seen_ids:
-            raise ValueError(f"{path}:{line_number}: duplicate fixture id {fixture_id!r}")
+            raise location.error(f"duplicate fixture id {fixture_id!r}")
         seen_ids.add(fixture_id)
         fixtures.append(EvaluationFixture(fixture_id, language, prompt, expected_terms))
 
@@ -58,16 +72,13 @@ def load_fixture_catalog(path: Path) -> tuple[EvaluationFixture, ...]:
     return tuple(fixtures)
 
 
-def _required_string(
-    record: dict[str, object], key: str, path: Path, line_number: int
+def _required_field(
+    record: dict[str, object], key: str, location: FixtureLocation
 ) -> str:
-    value = record.get(key)
-    if not isinstance(value, str) or not value.strip():
-        raise ValueError(f"{path}:{line_number}: {key} must be a non-empty string")
-    return value
+    return _non_empty_string(record.get(key), key, location)
 
 
-def _non_empty_term(value: object, path: Path, line_number: int) -> str:
+def _non_empty_string(value: object, description: str, location: FixtureLocation) -> str:
     if not isinstance(value, str) or not value.strip():
-        raise ValueError(f"{path}:{line_number}: expected terms must be non-empty strings")
+        raise location.error(f"{description} must be a non-empty string")
     return value

@@ -10,7 +10,7 @@ but authoritative behavior stays behind typed module interfaces in one Python di
 | `workers/source-processing` | Source-worker image and deployment boundary, not a separate service |
 | `packages/generated-client` | Generated TypeScript client output owned by the OpenAPI toolchain |
 | `infra/compose` | Local loopback deployment substrate |
-| `evals` | Versioned, learner-data-free evaluation fixtures and harness |
+| `evals` | Versioned, learner-data-free evaluation fixtures and tests; harness code stays in the single Python distribution |
 | `tests` | Tests that cross package boundaries through public interfaces |
 
 ## Workspace rules

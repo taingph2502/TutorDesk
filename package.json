@@ -11,8 +11,9 @@
   },
   "scripts": {
     "dev": "pnpm --filter @tutordesk/web dev",
-    "build": "pnpm --recursive --if-present build",
-    "lint": "pnpm lint:js && uv run ruff check apps/server/src evals/src evals/tests tests tools",
+    "build": "pnpm build:js && uv build --all-packages",
+    "build:js": "pnpm --recursive --if-present build",
+    "lint": "pnpm lint:js && uv run ruff check apps/server/src evals/tests tests tools",
     "lint:js": "pnpm --recursive --if-present lint",
     "typecheck": "pnpm typecheck:js && uv run pyright",
     "typecheck:js": "pnpm --recursive --if-present typecheck",

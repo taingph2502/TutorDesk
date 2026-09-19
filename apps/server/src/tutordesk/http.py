@@ -1,5 +1,7 @@
 """HTTP presentation adapter for TutorDesk."""
 
+from typing import Literal
+
 from fastapi import APIRouter, FastAPI
 from pydantic import BaseModel
 
@@ -7,7 +9,7 @@ from pydantic import BaseModel
 class HealthStatus(BaseModel):
     """Public health response."""
 
-    status: str
+    status: Literal["ok"]
 
 
 def create_app() -> FastAPI:

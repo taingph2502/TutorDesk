@@ -6,7 +6,7 @@ import argparse
 import json
 from pathlib import Path
 
-from tutordesk_evals.catalog import SUPPORTED_LANGUAGES, load_fixture_catalog
+from tutordesk.evals.catalog import SUPPORTED_LANGUAGES, load_fixture_catalog
 
 
 def main() -> None:

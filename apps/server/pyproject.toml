@@ -6,13 +6,22 @@ readme = "README.md"
 requires-python = ">=3.12,<3.14"
 license = "Apache-2.0"
 dependencies = [
+  "alembic>=1.16.5,<2",
   "fastapi>=0.118.0,<1",
   "pydantic>=2.11.9,<3",
+  "psycopg[binary]>=3.2.10,<4",
+  "sqlalchemy>=2.0.43,<3",
   "uvicorn[standard]>=0.37.0,<1",
 ]
 
 [project.scripts]
 tutordesk-api = "tutordesk.entrypoints.api:main"
+tutordesk-eval = "tutordesk.evals.cli:main"
+tutordesk-maintenance = "tutordesk.entrypoints.maintenance:main"
+tutordesk-migrate = "tutordesk.entrypoints.migration:main"
+tutordesk-processing-supervisor = "tutordesk.entrypoints.processing_supervisor:main"
+tutordesk-scheduler = "tutordesk.entrypoints.scheduler:main"
+tutordesk-source-worker = "tutordesk.entrypoints.source_worker:main"
 
 [build-system]
 requires = ["hatchling>=1.27.0,<2"]

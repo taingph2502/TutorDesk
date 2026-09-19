@@ -2,7 +2,7 @@ from pathlib import Path
 
 import pytest
 
-from tutordesk_evals.catalog import load_fixture_catalog
+from tutordesk.evals.catalog import load_fixture_catalog
 
 FIXTURE_CATALOG = Path(__file__).parents[1] / "fixtures" / "smoke.jsonl"
 

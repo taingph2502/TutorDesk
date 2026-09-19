@@ -8,7 +8,7 @@ dev = [
 ]
 
 [tool.uv.workspace]
-members = ["apps/server", "evals"]
+members = ["apps/server"]
 
 [tool.pytest.ini_options]
 addopts = "--strict-config --strict-markers"
@@ -22,7 +22,7 @@ filterwarnings = [
 testpaths = ["apps/server/tests", "evals/tests", "tests"]
 
 [tool.pyright]
-include = ["apps/server/src", "evals/src", "tools"]
+include = ["apps/server/src", "tools"]
 pythonVersion = "3.12"
 typeCheckingMode = "strict"
 
@@ -34,7 +34,7 @@ target-version = "py312"
 select = ["E", "F", "I", "UP", "B", "SIM", "RUF"]
 
 [tool.ruff.lint.isort]
-known-first-party = ["tutordesk", "tutordesk_evals"]
+known-first-party = ["tutordesk"]
 
 [tool.ruff.lint.per-file-ignores]
 "**/tests/**" = ["S101"]
